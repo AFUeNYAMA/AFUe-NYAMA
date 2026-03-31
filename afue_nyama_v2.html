@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFUɛ NYAMA — L'Énergie Primordiale</title>
+<meta name="description" content="AFUɛ NYAMA — Épopée africaine de dark fantasy. Le Nyama se souvient.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--void:#050301;--deep:#0D0702;--dark:#1A0E04;--bark:#2C1A0A;--terra:#5C2A00;--fire:#C8500A;--gold:#C8860A;--gold-light:#F5D78E;--ember:#FF4A1C;--ash:#8B7355;--fog:#D4B896;--cream:#F9F0E1;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--void);color:var(--fog);font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.7;cursor:none;overflow-x:hidden;}
+::selection{background:var(--gold);color:var(--void);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--void);}::-webkit-scrollbar-thumb{background:var(--gold);}
+#cursor{position:fixed;z-index:9999;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--gold),0 0 24px rgba(200,134,10,.4);mix-blend-mode:screen;transition:width .15s,height .15s,background .15s;}
+#cursor-trail{position:fixed;z-index:9998;width:32px;height:32px;border:1px solid rgba(200,134,10,.4);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);}
+body.hovering #cursor{width:20px;height:20px;background:var(--ember);}
+#grain{position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;animation:grain .5s steps(1) infinite;}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}30%{transform:translate(-3%,4%)}50%{transform:translate(-4%,2%)}70%{transform:translate(-1%,4%)}90%{transform:translate(-2%,3%)};}
+#nyama-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 4vw;height:70px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(5,3,1,.95),transparent);backdrop-filter:blur(4px);}
+.nav-logo{font-family:'Cinzel Decorative',serif;font-size:1rem;letter-spacing:.15em;color:var(--gold);text-decoration:none;cursor:none;position:relative;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center;}
+.nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color .3s;cursor:none;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-light);}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);transform-origin:left;}
+.nav-auth{display:flex;gap:.8rem;align-items:center;}
+.btn-nav{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.2rem;border:1px solid rgba(200,134,10,.4);color:var(--gold);background:none;cursor:none;transition:all .3s;}
+.btn-nav:hover{background:rgba(200,134,10,.08);border-color:var(--gold);}
+.btn-nav.primary{background:var(--gold);color:var(--void);}
+.btn-nav.primary:hover{background:var(--gold-light);}
+.nav-user{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);letter-spacing:.1em;}
+.nav-badge{display:inline-block;background:var(--ember);color:var(--void);font-size:.5rem;padding:.1rem .4rem;border-radius:2px;margin-left:.3rem;vertical-align:middle;font-weight:bold;}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh;position:relative;z-index:1;}
+.page.active{display:block;}
+#page-home{display:block;}
+
+/* ─── HOME SECTIONS ─────────────────────────── */
+#hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5vw 80px;overflow:hidden;}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(200,80,10,.08) 0,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(200,134,10,.06) 0,transparent 40%);pointer-events:none;}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease .3s forwards;}
+.hero-mask{position:relative;width:180px;height:220px;margin:0 auto 2.5rem;opacity:0;animation:fadeIn 1.5s ease .1s forwards;}
+.mask-svg{width:100%;height:100%;filter:drop-shadow(0 0 20px rgba(200,134,10,.3));}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(3.5rem,10vw,9rem);font-weight:900;line-height:.9;background:linear-gradient(135deg,var(--gold-light) 0,var(--gold) 30%,var(--fire) 60%,var(--ember) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0;animation:fadeUp 1.2s ease .5s forwards;}
+.hero-subtitle{font-family:'Cinzel',serif;font-size:clamp(.7rem,2vw,1rem);letter-spacing:.5em;text-transform:uppercase;color:var(--ash);margin-top:.8rem;opacity:0;animation:fadeUp 1s ease .8s forwards;}
+.hero-tagline{font-style:italic;font-size:clamp(1rem,2.5vw,1.3rem);color:var(--fog);max-width:600px;margin:2.5rem auto;opacity:0;animation:fadeUp 1s ease 1.1s forwards;line-height:1.8;}
+.hero-tagline em{color:var(--gold);font-style:normal;}
+.hero-cta{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s ease 1.4s forwards;}
+.btn-primary{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;padding:1rem 2.5rem;background:var(--gold);color:var(--void);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .3s;font-weight:600;cursor:none;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+.btn-secondary{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;padding:1rem 2.5rem;border:1px solid rgba(200,134,10,.5);color:var(--gold);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .3s;cursor:none;}
+.btn-secondary:hover{border-color:var(--gold);background:rgba(200,134,10,.05);}
+.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeIn 1s ease 2s forwards;}
+.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold));animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+section{position:relative;z-index:1;padding:8rem 5vw;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+.section-label::before{content:'';flex:0 0 40px;height:1px;background:var(--gold);}
+.section-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--cream);line-height:1.1;margin-bottom:1rem;}
+.section-divider{width:80px;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:1.5rem 0 3rem;}
+#synopsis{background:linear-gradient(to bottom,var(--void),var(--deep));}
+.synopsis-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.synopsis-visual{position:relative;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;}
+.synopsis-frame{position:relative;width:100%;height:100%;border:1px solid rgba(200,134,10,.2);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.synopsis-frame::before{content:'';position:absolute;inset:8px;border:1px solid rgba(200,134,10,.1);}
+.synopsis-bg-text{position:absolute;font-family:'Cinzel Decorative',serif;font-size:12rem;font-weight:900;color:rgba(200,134,10,.03);line-height:1;user-select:none;}
+.synopsis-mask-large{position:relative;z-index:1;width:70%;filter:drop-shadow(0 0 40px rgba(200,80,10,.2));animation:floatMask 6s ease-in-out infinite;}
+@keyframes floatMask{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.synopsis-corner{position:absolute;width:20px;height:20px;border-color:var(--gold);border-style:solid;}
+.synopsis-corner.tl{top:0;left:0;border-width:1px 0 0 1px}.synopsis-corner.tr{top:0;right:0;border-width:1px 1px 0 0}
+.synopsis-corner.bl{bottom:0;left:0;border-width:0 0 1px 1px}.synopsis-corner.br{bottom:0;right:0;border-width:0 1px 1px 0}
+.synopsis-text p{margin-bottom:1.5rem;color:var(--fog);font-size:1.05rem;}
+.synopsis-text p strong{color:var(--gold-light);font-weight:500;}
+.synopsis-quote{margin:2.5rem 0;padding:1.5rem 2rem;border-left:2px solid var(--gold);background:rgba(200,134,10,.03);font-style:italic;font-size:1.15rem;color:var(--gold-light);position:relative;}
+.synopsis-quote::before{content:'❝';position:absolute;top:-.5rem;left:1rem;font-size:3rem;color:rgba(200,134,10,.2);line-height:1;}
+#nyama-system{background:var(--deep);overflow:hidden;}
+.nyama-bg-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(200,134,10,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(200,134,10,.03) 60px);pointer-events:none;}
+.nyama-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4rem;}
+.nyama-tier{position:relative;padding:3rem 2rem;background:rgba(26,14,4,.8);border:1px solid rgba(200,134,10,.1);text-align:center;transition:all .4s;overflow:hidden;}
+.nyama-tier::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:all .4s;}
+.nyama-tier:nth-child(1)::before{background:linear-gradient(to right,transparent,#A0C0FF,transparent);}
+.nyama-tier:nth-child(2)::before{background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.nyama-tier:nth-child(3)::before{background:linear-gradient(to right,transparent,var(--ember),transparent);}
+.nyama-tier:hover{background:rgba(40,20,5,.9);transform:translateY(-4px);}
+.tier-number{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;opacity:.06;position:absolute;top:1rem;right:1rem;}
+.tier-badge{display:inline-block;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;padding:.3rem 1rem;border:1px solid;text-transform:uppercase;margin-bottom:1.5rem;}
+.nyama-tier:nth-child(1) .tier-badge{color:#A0C0FF;border-color:rgba(160,192,255,.4);}
+.nyama-tier:nth-child(2) .tier-badge{color:var(--gold);border-color:rgba(200,134,10,.4);}
+.nyama-tier:nth-child(3) .tier-badge{color:var(--ember);border-color:rgba(255,74,28,.4);}
+.tier-name{font-family:'Cinzel Decorative',serif;font-size:1.5rem;font-weight:700;color:var(--cream);margin-bottom:.5rem;}
+.tier-phonetic{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;color:var(--ash);margin-bottom:1.5rem;}
+.tier-desc{font-size:.95rem;color:var(--fog);line-height:1.8;}
+#characters{background:linear-gradient(to bottom,var(--deep),var(--void));}
+.char-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;margin-top:4rem;}
+.char-card{position:relative;aspect-ratio:2/3;overflow:hidden;cursor:none;background:var(--dark);}
+.char-card:hover .char-overlay{opacity:1;}
+.char-card:hover .char-info{opacity:1;transform:translateY(0);}
+.char-visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.char-mask-wrap{width:55%;filter:drop-shadow(0 20px 40px rgba(0,0,0,.8));transition:transform .5s ease;}
+.char-card:hover .char-mask-wrap{transform:scale(1.05) translateY(-10px);}
+.char-bg-glow{position:absolute;inset:0;pointer-events:none;}
+.char-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,3,1,.95) 40%,transparent 100%);opacity:.7;transition:opacity .4s;}
+.char-border{position:absolute;inset:0;border:1px solid rgba(200,134,10,.1);transition:border-color .4s;pointer-events:none;}
+.char-card:hover .char-border{border-color:rgba(200,134,10,.3);}
+.char-info{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.5rem;opacity:0;transform:translateY(10px);transition:all .4s;}
+.char-name-bg{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.5rem;background:linear-gradient(to top,rgba(5,3,1,.98),transparent);}
+.char-role{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.char-name{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;color:var(--cream);line-height:1.1;margin-bottom:.8rem;}
+.char-desc{font-size:.85rem;color:var(--fog);line-height:1.7;}
+.char-power{margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;}
+.power-tag{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;padding:.2rem .6rem;border:1px solid rgba(200,134,10,.3);color:var(--gold);text-transform:uppercase;}
+#universe{background:var(--void);}
+.universe-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:4rem;}
+.myth-entry{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(200,134,10,.1);}
+.myth-entry:last-child{border-bottom:none;}
+.myth-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(200,134,10,.08);line-height:1;margin-bottom:-1.5rem;}
+.myth-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--gold-light);letter-spacing:.1em;margin-bottom:.8rem;position:relative;display:inline-block;cursor:default;}
+.myth-title[data-secret]:hover::after{content:attr(data-secret);position:absolute;left:0;top:-2.5rem;background:rgba(5,3,1,.95);border:1px solid var(--gold);color:var(--gold);font-size:.6rem;letter-spacing:.1em;padding:.4rem .8rem;white-space:nowrap;z-index:10;}
+.myth-text{font-size:.95rem;color:var(--fog);line-height:1.9;}
+.myth-source{margin-top:.8rem;font-size:.7rem;font-family:'Cinzel',serif;letter-spacing:.2em;color:rgba(200,134,10,.5);text-transform:uppercase;}
+.universe-right{position:sticky;top:120px;}
+.cosmos-visual{position:relative;width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
+.cosmos-ring{position:absolute;border:1px solid;border-radius:50%;animation:rotateSlow linear infinite;}
+.cosmos-ring:nth-child(1){width:90%;height:90%;border-color:rgba(200,134,10,.15);animation-duration:40s;}
+.cosmos-ring:nth-child(2){width:70%;height:70%;border-color:rgba(200,134,10,.1);animation-duration:30s;animation-direction:reverse;}
+.cosmos-ring:nth-child(3){width:50%;height:50%;border-color:rgba(200,80,10,.12);animation-duration:20s;}
+.cosmos-center{position:relative;z-index:1;width:30%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
+.cosmos-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;box-shadow:0 0 20px var(--gold),0 0 60px rgba(200,134,10,.4);animation:pulse-gold 3s ease-in-out infinite;}
+.cosmos-label{position:absolute;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:rgba(200,134,10,.6);text-transform:uppercase;}
+@keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+#news{background:var(--deep);}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2px;margin-top:4rem;}
+.news-card{padding:2.5rem;background:rgba(26,14,4,.6);border:1px solid rgba(200,134,10,.08);position:relative;overflow:hidden;transition:all .3s;}
+.news-card:hover{background:rgba(40,20,5,.8);border-color:rgba(200,134,10,.2);}
+.news-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+.news-card.status-soon::before{background:var(--gold);}
+.news-card.status-active::before{background:var(--ember);}
+.news-card.status-future::before{background:var(--ash);}
+.news-status{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.status-dot{width:6px;height:6px;border-radius:50%;}
+.status-soon .status-dot{background:var(--gold);box-shadow:0 0 8px var(--gold);}
+.status-active .status-dot{background:var(--ember);box-shadow:0 0 8px var(--ember);animation:blink 1.5s ease-in-out infinite;}
+.status-future .status-dot{background:var(--ash);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.news-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--cream);margin-bottom:1rem;font-weight:600;}
+.news-desc{font-size:.9rem;color:var(--fog);line-height:1.8;}
+.news-tag{display:inline-block;margin-top:1.5rem;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .8rem;background:rgba(200,134,10,.08);color:var(--gold);border:1px solid rgba(200,134,10,.2);}
+#gallery{background:var(--void);}
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:2px;margin-top:4rem;}
+.gallery-item{position:relative;overflow:hidden;background:var(--dark);display:flex;align-items:center;justify-content:center;cursor:none;}
+.gallery-item:first-child{grid-row:1/3;}
+.gallery-item:nth-child(2),.gallery-item:nth-child(3),.gallery-item:nth-child(4),.gallery-item:nth-child(5){aspect-ratio:1;}
+.gallery-inner{width:100%;height:100%;min-height:300px;display:flex;align-items:center;justify-content:center;position:relative;transition:transform .5s ease;}
+.gallery-item:hover .gallery-inner{transform:scale(1.03);}
+.gallery-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
+.gallery-placeholder-icon{width:60%;opacity:.2;filter:sepia(1) saturate(2);}
+.gallery-label{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(5,3,1,.9),transparent);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity .3s;}
+.gallery-item:hover .gallery-label{opacity:1;}
+.gallery-coming{position:absolute;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,134,10,.4);}
+#contact{background:linear-gradient(to bottom,var(--void),var(--deep));text-align:center;}
+.contact-inner{max-width:700px;margin:0 auto;}
+.contact-tagline{font-style:italic;font-size:1.1rem;color:var(--fog);margin:2rem 0 3rem;}
+.social-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;}
+.social-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;color:var(--ash);padding:.8rem 1.5rem;border:1px solid rgba(200,134,10,.2);transition:all .3s;position:relative;overflow:hidden;cursor:none;}
+.social-link:hover{color:var(--gold);border-color:var(--gold);}
+.contact-form{display:flex;flex-direction:column;gap:1rem;text-align:left;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;}
+.form-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);}
+.form-input,.form-textarea{background:rgba(255,255,255,.03);border:1px solid rgba(200,134,10,.15);color:var(--fog);padding:.9rem 1.2rem;font-family:'EB Garamond',serif;font-size:1rem;outline:none;transition:border-color .3s;width:100%;}
+.form-input:focus,.form-textarea:focus{border-color:rgba(200,134,10,.5);}
+.form-textarea{resize:vertical;min-height:140px;}
+.form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;padding:1rem 2.5rem;background:var(--gold);color:var(--void);border:none;cursor:none;font-weight:600;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .3s;align-self:flex-start;}
+.form-submit:hover{background:var(--gold-light);}
+footer{position:relative;z-index:1;padding:3rem 5vw;border-top:1px solid rgba(200,134,10,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold);}
+.footer-text{font-size:.75rem;color:rgba(139,115,85,.5);}
+.footer-secret{font-size:.6rem;color:rgba(200,134,10,.015);letter-spacing:.05em;cursor:default;transition:color 3s;font-family:'Cinzel',serif;}
+.footer-secret:hover{color:rgba(200,134,10,.5);transition:color .1s;}
+
+/* ─── NEW PAGES ─────────────────────────────── */
+.page-header{padding:120px 5vw 3rem;background:linear-gradient(to bottom,var(--void),var(--deep));}
+.page-header .section-label{margin-bottom:.5rem;}
+.page-header .section-title{margin-bottom:0;}
+
+/* Tomes */
+.tomes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;padding:3rem 5vw;}
+.tome-card{background:rgba(26,14,4,.8);border:1px solid rgba(200,134,10,.15);padding:0;overflow:hidden;transition:all .3s;position:relative;}
+.tome-card:hover{border-color:rgba(200,134,10,.4);transform:translateY(-4px);}
+.tome-cover{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--dark),var(--bark));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.tome-cover-num{font-family:'Bebas Neue',sans-serif;font-size:8rem;color:rgba(200,134,10,.08);position:absolute;}
+.tome-cover-icon{position:relative;z-index:1;width:40%;opacity:.5;}
+.tome-info{padding:1.5rem;}
+.tome-num-badge{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.tome-title{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--cream);margin-bottom:.8rem;}
+.tome-desc{font-size:.85rem;color:var(--fog);line-height:1.7;margin-bottom:1.2rem;}
+.tome-actions{display:flex;gap:.8rem;flex-wrap:wrap;}
+.btn-tome{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1rem;border:1px solid rgba(200,134,10,.3);color:var(--gold);background:none;cursor:none;transition:all .3s;text-decoration:none;}
+.btn-tome:hover{background:rgba(200,134,10,.08);}
+.btn-tome.fill{background:var(--gold);color:var(--void);border-color:var(--gold);}
+.btn-tome.fill:hover{background:var(--gold-light);}
+.tome-code-hint{margin-top:1rem;font-size:.7rem;font-style:italic;color:rgba(200,134,10,.4);}
+
+/* Manga */
+.manga-chapter-select{padding:2rem 5vw 0;display:flex;gap:1rem;flex-wrap:wrap;}
+.chapter-btn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;padding:.6rem 1.2rem;border:1px solid rgba(200,134,10,.2);color:var(--ash);background:none;cursor:none;transition:all .3s;}
+.chapter-btn:hover,.chapter-btn.active{border-color:var(--gold);color:var(--gold);}
+.manga-pages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:4px;padding:2rem 5vw;}
+.manga-page-card{position:relative;background:var(--dark);overflow:hidden;cursor:none;}
+.manga-page-card img{width:100%;display:block;transition:transform .4s;}
+.manga-page-card:hover img{transform:scale(1.03);}
+.manga-page-num{position:absolute;bottom:.5rem;right:.5rem;font-family:'Cinzel',serif;font-size:.55rem;color:rgba(200,134,10,.6);background:rgba(5,3,1,.8);padding:.2rem .5rem;}
+.manga-empty{text-align:center;padding:6rem 2rem;color:var(--ash);}
+.manga-empty h3{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--cream);margin-bottom:1rem;}
+
+/* Profile */
+#page-profile{padding:100px 5vw 4rem;}
+.profile-inner{max-width:900px;margin:0 auto;}
+.profile-header{display:grid;grid-template-columns:200px 1fr;gap:3rem;align-items:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(200,134,10,.15);}
+.profile-mask-wrap{position:relative;}
+.profile-mask-svg{width:100%;filter:drop-shadow(0 0 30px rgba(200,134,10,.3));}
+.profile-info .username{font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:var(--cream);margin-bottom:.5rem;}
+.profile-info .email{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;color:var(--ash);margin-bottom:1.5rem;}
+.profile-stats{display:flex;gap:2rem;margin-bottom:2rem;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1;}
+.stat-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);}
+.progress-section{margin-bottom:3rem;}
+.progress-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;justify-content:space-between;}
+.progress-bar-bg{height:8px;background:rgba(200,134,10,.1);border-radius:4px;overflow:hidden;position:relative;}
+.progress-bar-fill{height:100%;background:linear-gradient(to right,var(--terra),var(--gold),var(--ember));border-radius:4px;transition:width 1s ease;position:relative;}
+.progress-bar-fill::after{content:'';position:absolute;top:0;right:0;bottom:0;width:40px;background:linear-gradient(to right,transparent,rgba(255,255,255,.3));animation:shimmer 2s ease-in-out infinite;}
+@keyframes shimmer{0%,100%{opacity:0}50%{opacity:1}}
+.progress-text{margin-top:.8rem;font-size:.85rem;color:var(--fog);}
+.fragments-found-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+.fragment-badge{padding:1rem;border:1px solid;border-radius:2px;transition:all .3s;}
+.fragment-badge.commun{border-color:rgba(139,115,85,.3);background:rgba(139,115,85,.05);}
+.fragment-badge.rare{border-color:rgba(160,192,255,.3);background:rgba(160,192,255,.05);}
+.fragment-badge.legendaire{border-color:rgba(200,134,10,.4);background:rgba(200,134,10,.06);}
+.fragment-badge.mythique{border-color:rgba(255,74,28,.5);background:rgba(255,74,28,.06);animation:mythPulse 3s ease-in-out infinite;}
+@keyframes mythPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 15px rgba(255,74,28,.2)}}
+.fragment-badge .f-rarity{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:.3rem;}
+.fragment-badge.commun .f-rarity{color:var(--ash);}
+.fragment-badge.rare .f-rarity{color:#A0C0FF;}
+.fragment-badge.legendaire .f-rarity{color:var(--gold);}
+.fragment-badge.mythique .f-rarity{color:var(--ember);}
+.fragment-badge .f-title{font-family:'Cinzel',serif;font-size:.75rem;color:var(--cream);font-weight:600;}
+.fragment-badge-locked{padding:1rem;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.01);filter:blur(.3px);}
+.fragment-badge-locked .f-title{font-family:'Cinzel',serif;font-size:.75rem;color:rgba(139,115,85,.3);}
+
+/* Leaderboard */
+.leaderboard{margin-top:3rem;}
+.leaderboard-entry{display:flex;align-items:center;gap:1.5rem;padding:1rem 1.5rem;border-bottom:1px solid rgba(200,134,10,.06);transition:background .3s;}
+.leaderboard-entry:hover{background:rgba(200,134,10,.03);}
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:rgba(200,134,10,.3);width:40px;text-align:center;}
+.lb-rank.gold-rank{color:var(--gold);}
+.lb-name{font-family:'Cinzel',serif;font-size:.85rem;color:var(--cream);flex:1;}
+.lb-score{font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold);}
+.lb-bar{height:4px;background:rgba(200,134,10,.1);width:100px;border-radius:2px;overflow:hidden;}
+.lb-bar-fill{height:100%;background:var(--gold);}
+
+/* Admin */
+#page-admin{padding:100px 3vw 4rem;}
+.admin-layout{display:grid;grid-template-columns:240px 1fr;gap:2rem;max-width:1400px;margin:0 auto;}
+.admin-sidebar{background:rgba(26,14,4,.6);border:1px solid rgba(200,134,10,.1);padding:1.5rem;}
+.admin-sidebar h3{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.admin-nav-item{display:block;width:100%;padding:.7rem 1rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);background:none;border:none;cursor:none;text-align:left;transition:all .3s;border-left:2px solid transparent;margin-bottom:.3rem;}
+.admin-nav-item:hover,.admin-nav-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(200,134,10,.05);}
+.admin-panel{background:rgba(26,14,4,.4);border:1px solid rgba(200,134,10,.1);padding:2rem;}
+.admin-panel-section{display:none;}
+.admin-panel-section.active{display:block;}
+.admin-section-title{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--cream);margin-bottom:.5rem;}
+.admin-section-sub{font-size:.85rem;color:var(--ash);margin-bottom:2rem;}
+.admin-table{width:100%;border-collapse:collapse;}
+.admin-table th{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-align:left;padding:.8rem 1rem;border-bottom:1px solid rgba(200,134,10,.2);}
+.admin-table td{padding:.8rem 1rem;border-bottom:1px solid rgba(200,134,10,.06);font-size:.85rem;color:var(--fog);vertical-align:middle;}
+.admin-table tr:hover td{background:rgba(200,134,10,.02);}
+.admin-form{display:flex;flex-direction:column;gap:1.2rem;}
+.admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.admin-input,.admin-textarea,.admin-select{background:rgba(255,255,255,.03);border:1px solid rgba(200,134,10,.2);color:var(--fog);padding:.8rem 1rem;font-family:'EB Garamond',serif;font-size:.95rem;outline:none;width:100%;transition:border-color .3s;}
+.admin-input:focus,.admin-textarea:focus,.admin-select:focus{border-color:rgba(200,134,10,.5);}
+.admin-textarea{resize:vertical;min-height:100px;}
+.admin-select{cursor:none;}
+.admin-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash);display:block;margin-bottom:.4rem;}
+.admin-btn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;padding:.7rem 1.5rem;background:var(--gold);color:var(--void);border:none;cursor:none;font-weight:600;transition:all .3s;}
+.admin-btn:hover{background:var(--gold-light);}
+.admin-btn.danger{background:var(--ember);color:var(--void);}
+.admin-btn.outline{background:none;border:1px solid rgba(200,134,10,.3);color:var(--gold);}
+.admin-btn.outline:hover{background:rgba(200,134,10,.08);}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;}
+.admin-stat{padding:1.5rem;border:1px solid rgba(200,134,10,.15);background:rgba(26,14,4,.5);}
+.admin-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1;}
+.admin-stat-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);}
+.admin-msg{padding:1rem 1.5rem;border-left:3px solid;margin-bottom:1rem;font-size:.85rem;}
+.admin-msg.success{border-color:var(--gold);background:rgba(200,134,10,.05);color:var(--gold-light);}
+.admin-msg.error{border-color:var(--ember);background:rgba(255,74,28,.05);color:var(--ember);}
+.fragment-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;}
+.fragment-admin-card{padding:1rem;border:1px solid rgba(200,134,10,.1);font-size:.8rem;}
+.fragment-admin-card .f-id{font-family:'Cinzel',serif;font-size:.55rem;color:var(--gold);}
+.fragment-admin-card .f-name{font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);margin:.3rem 0;}
+.fragment-admin-card .f-found{color:var(--ash);}
+.badge-rarity{display:inline-block;font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid;border-radius:2px;}
+.badge-rarity.commun{color:var(--ash);border-color:rgba(139,115,85,.3);}
+.badge-rarity.rare{color:#A0C0FF;border-color:rgba(160,192,255,.3);}
+.badge-rarity.legendaire{color:var(--gold);border-color:rgba(200,134,10,.4);}
+.badge-rarity.mythique{color:var(--ember);border-color:rgba(255,74,28,.5);}
+.tome-code-reveal{background:rgba(200,134,10,.08);border:1px solid rgba(200,134,10,.2);padding:1rem;margin-top:1rem;}
+.tome-code-reveal code{font-family:monospace;color:var(--gold);font-size:1rem;letter-spacing:.3em;}
+
+/* ─── MODALS ─────────────────────────────────── */
+.modal-bg{display:none;position:fixed;inset:0;z-index:8000;background:rgba(5,3,1,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;}
+.modal-bg.open{display:flex;animation:fadeIn .3s ease;}
+.modal{background:var(--dark);border:1px solid rgba(200,134,10,.2);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-header{padding:2rem 2rem 0;border-bottom:1px solid rgba(200,134,10,.1);padding-bottom:1.5rem;}
+.modal-title{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--cream);}
+.modal-sub{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.modal-body{padding:2rem;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--ash);font-size:1.5rem;cursor:none;transition:color .3s;}
+.modal-close:hover{color:var(--gold);}
+.modal-form{display:flex;flex-direction:column;gap:1.2rem;}
+.modal-form .form-input{background:rgba(255,255,255,.04);}
+.modal-toggle{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--ash);text-align:center;margin-top:1rem;}
+.modal-toggle span{color:var(--gold);cursor:none;}
+.modal-toggle span:hover{text-decoration:underline;}
+.modal-error{background:rgba(255,74,28,.08);border:1px solid rgba(255,74,28,.3);padding:.8rem 1rem;color:var(--ember);font-size:.85rem;margin-bottom:1rem;}
+
+/* CGU modal */
+.cgu-modal{max-width:700px;}
+.cgu-content{max-height:50vh;overflow-y:auto;padding:1rem;background:rgba(255,255,255,.02);border:1px solid rgba(200,134,10,.08);margin-bottom:1.5rem;font-size:.85rem;line-height:1.9;color:var(--fog);}
+.cgu-content::-webkit-scrollbar{width:3px;}
+.cgu-content::-webkit-scrollbar-thumb{background:var(--gold);}
+.cgu-content h4{font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold-light);letter-spacing:.1em;margin:1.5rem 0 .5rem;}
+.cgu-content h4:first-child{margin-top:0;}
+.cgu-content p{margin-bottom:.8rem;}
+.cgu-accept{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+.cgu-accept input{width:16px;height:16px;accent-color:var(--gold);cursor:none;}
+.cgu-accept label{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--fog);}
+
+/* Fragment reveal */
+.fragment-reveal-modal{text-align:center;}
+.fragment-rarity-banner{padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+.fragment-rarity-banner.commun{background:rgba(139,115,85,.08);}
+.fragment-rarity-banner.rare{background:rgba(160,192,255,.06);}
+.fragment-rarity-banner.legendaire{background:rgba(200,134,10,.08);}
+.fragment-rarity-banner.mythique{background:rgba(255,74,28,.08);animation:mythPulse 2s ease-in-out infinite;}
+.fragment-rarity-text{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;}
+.fragment-rarity-banner.commun .fragment-rarity-text{color:var(--ash);}
+.fragment-rarity-banner.rare .fragment-rarity-text{color:#A0C0FF;}
+.fragment-rarity-banner.legendaire .fragment-rarity-text{color:var(--gold);}
+.fragment-rarity-banner.mythique .fragment-rarity-text{color:var(--ember);}
+.fragment-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;opacity:.08;position:absolute;right:1rem;bottom:-0.5rem;}
+.fragment-reveal-symbol{font-size:3rem;margin:1rem 0;}
+.fragment-reveal-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--cream);margin-bottom:.3rem;}
+.fragment-reveal-sub{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);margin-bottom:1.5rem;}
+.fragment-reveal-text{font-style:italic;font-size:1rem;color:var(--fog);line-height:1.8;border-left:2px solid rgba(200,134,10,.3);padding-left:1.5rem;text-align:left;margin-bottom:1.5rem;}
+.fragment-xp{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;}
+.fragment-xp.commun{color:var(--ash);}
+.fragment-xp.rare{color:#A0C0FF;}
+.fragment-xp.legendaire{color:var(--gold);}
+.fragment-xp.mythique{color:var(--ember);}
+
+/* Tome code entry */
+.tome-code-section{padding:3rem 5vw;border-top:1px solid rgba(200,134,10,.08);}
+.tome-code-form{display:flex;gap:1rem;max-width:500px;margin:1rem auto 0;}
+.tome-code-input{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(200,134,10,.2);color:var(--fog);padding:.8rem 1rem;font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.2em;outline:none;}
+.tome-code-input:focus{border-color:rgba(200,134,10,.5);}
+
+/* Secret overlay */
+#secret-overlay{display:none;position:fixed;inset:0;z-index:9995;background:rgba(5,3,1,.97);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;}
+#secret-overlay.active{display:flex;animation:fadeIn .5s ease;}
+.secret-content{max-width:600px;}
+.secret-symbol{font-family:'Cinzel Decorative',serif;font-size:4rem;color:var(--gold);margin-bottom:2rem;animation:pulse-gold 2s ease-in-out infinite;}
+.secret-close{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);background:none;border:1px solid rgba(200,134,10,.3);padding:.8rem 2rem;cursor:none;transition:all .3s;margin-top:1.5rem;}
+.secret-close:hover{color:var(--gold);border-color:var(--gold);}
+
+/* Notif */
+#fragment-notif{position:fixed;top:80px;right:2rem;z-index:1001;padding:.8rem 1.5rem;background:rgba(5,3,1,.95);border:1px solid var(--gold);border-left:3px solid var(--gold);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;color:var(--gold);transform:translateX(120%);transition:transform .4s ease;max-width:300px;}
+#fragment-notif.show{transform:translateX(0);}
+#nyama-counter{position:fixed;bottom:2rem;right:2rem;z-index:100;width:50px;height:50px;border:1px solid rgba(200,134,10,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s;background:rgba(5,3,1,.8);}
+#nyama-counter:hover{border-color:var(--gold);}
+#nyama-count-num{font-family:'Cinzel',serif;font-size:.8rem;color:var(--gold);}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse-gold{0%,100%{box-shadow:0 0 12px var(--gold)}50%{box-shadow:0 0 30px var(--gold),0 0 60px rgba(200,134,10,.3)}}
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* Mobile */
+@media(max-width:900px){.synopsis-grid{grid-template-columns:1fr}.synopsis-visual{display:none}.nyama-tiers{grid-template-columns:1fr}.universe-grid{grid-template-columns:1fr}.universe-right{position:static}.gallery-grid{grid-template-columns:1fr 1fr}.gallery-item:first-child{grid-row:auto;grid-column:1/3}.nav-links li:not(.keep){display:none}.admin-layout{grid-template-columns:1fr}.profile-header{grid-template-columns:1fr}}
+@media(max-width:600px){body{cursor:auto}#cursor,#cursor-trail{display:none}.gallery-grid{grid-template-columns:1fr}.gallery-item:first-child{grid-column:auto}.char-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div><div id="grain"></div>
+<canvas id="nyama-canvas"></canvas>
+
+<!-- FRAGMENT NOTIF -->
+<div id="fragment-notif"></div>
+<div id="nyama-counter" onclick="handleNyamaClick()"><span id="nyama-count-num">◈</span></div>
+
+<!-- SECRET OVERLAY (Zor'unmah) -->
+<div id="secret-overlay">
+  <div class="secret-content">
+    <div class="secret-symbol" id="so-symbol">⛧</div>
+    <div id="so-title" style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--ember);margin-bottom:1.5rem;"></div>
+    <p id="so-text" style="font-style:italic;font-size:1.1rem;color:var(--fog);line-height:1.8;margin-bottom:1rem;max-width:560px;"></p>
+    <p id="so-sub" style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:rgba(200,134,10,.5);text-transform:uppercase;margin-bottom:1.5rem;"></p>
+    <button class="secret-close" onclick="closeSecret()">Refermer le voile</button>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-bg" id="auth-modal">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('auth-modal')">×</button>
+    <div class="modal-header">
+      <div class="modal-sub" id="auth-modal-sub">Connexion</div>
+      <div class="modal-title" id="auth-modal-title">Entrer dans le Nyama</div>
+    </div>
+    <div class="modal-body">
+      <div id="auth-error" class="modal-error" style="display:none"></div>
+      <!-- LOGIN FORM -->
+      <div id="login-form">
+        <div class="modal-form">
+          <div class="form-group"><label class="form-label">Email ou Pseudonyme</label><input type="text" class="form-input" id="login-id" placeholder="email ou pseudo"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input type="password" class="form-input" id="login-pass" placeholder="••••••••"></div>
+          <button class="btn-primary" onclick="handleLogin()" style="align-self:stretch;clip-path:none;text-align:center">Se connecter</button>
+        </div>
+        <div class="modal-toggle">Pas encore de compte ? <span onclick="switchAuthMode('register')">Créer un compte</span></div>
+      </div>
+      <!-- REGISTER FORM -->
+      <div id="register-form" style="display:none">
+        <div class="modal-form">
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="reg-email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label class="form-label">Pseudonyme</label><input type="text" class="form-input" id="reg-pseudo" placeholder="Votre nom dans l'univers" maxlength="24"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input type="password" class="form-input" id="reg-pass" placeholder="Minimum 6 caractères"></div>
+          <div class="form-group"><label class="form-label">Confirmer</label><input type="password" class="form-input" id="reg-pass2" placeholder="Répétez le mot de passe"></div>
+          <button class="btn-primary" onclick="handleRegister()" style="align-self:stretch;clip-path:none;text-align:center">Créer mon compte</button>
+        </div>
+        <div class="modal-toggle">Déjà un compte ? <span onclick="switchAuthMode('login')">Se connecter</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CGU MODAL -->
+<div class="modal-bg" id="cgu-modal">
+  <div class="modal cgu-modal">
+    <div class="modal-header">
+      <div class="modal-sub">Charte d'Utilisation Officielle</div>
+      <div class="modal-title">Bienvenue dans l'Univers</div>
+    </div>
+    <div class="modal-body">
+      <div class="cgu-content" id="cgu-text"></div>
+      <div class="cgu-accept">
+        <input type="checkbox" id="cgu-check">
+        <label for="cgu-check">J'ai lu et j'accepte intégralement la présente Charte d'Utilisation</label>
+      </div>
+      <button class="btn-primary" onclick="acceptCGU()" style="width:100%;clip-path:none;text-align:center">Accepter et entrer dans le Nyama</button>
+    </div>
+  </div>
+</div>
+
+<!-- FRAGMENT REVEAL MODAL -->
+<div class="modal-bg" id="fragment-modal">
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('fragment-modal')">×</button>
+    <div class="fragment-rarity-banner" id="fr-banner">
+      <div class="fragment-rarity-text" id="fr-rarity-text"></div>
+      <div class="fragment-num" id="fr-num"></div>
+    </div>
+    <div class="modal-body fragment-reveal-modal">
+      <div class="fragment-reveal-symbol" id="fr-symbol"></div>
+      <div class="fragment-reveal-title" id="fr-title"></div>
+      <div class="fragment-reveal-sub" id="fr-sub"></div>
+      <div class="fragment-reveal-text" id="fr-text"></div>
+      <div class="fragment-xp" id="fr-xp"></div>
+      <div style="margin-top:1.5rem;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--ash)" id="fr-progress"></div>
+      <button class="btn-secondary" onclick="closeModal('fragment-modal')" style="margin-top:1.5rem;clip-path:none;width:100%;text-align:center;cursor:none">Refermer ce fragment</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOME VIEWER MODAL -->
+<div class="modal-bg" id="tome-viewer">
+  <div class="modal" style="max-width:800px;width:95vw">
+    <button class="modal-close" onclick="closeModal('tome-viewer')">×</button>
+    <div class="modal-header"><div class="modal-title" id="tv-title"></div></div>
+    <div class="modal-body" style="padding:1rem">
+      <embed id="tv-embed" type="application/pdf" style="width:100%;height:70vh;border:none;background:#111"/>
+      <div id="tv-fallback" style="display:none;text-align:center;padding:3rem">
+        <p style="color:var(--fog);margin-bottom:1.5rem">Votre navigateur ne supporte pas l'affichage PDF intégré.</p>
+        <a id="tv-download" class="btn-primary" style="display:inline-block">Télécharger le Tome</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MANGA VIEWER MODAL -->
+<div class="modal-bg" id="manga-viewer">
+  <div class="modal" style="max-width:700px;width:95vw">
+    <button class="modal-close" onclick="closeModal('manga-viewer')">×</button>
+    <div class="modal-header"><div class="modal-title" id="mv-title"></div></div>
+    <div class="modal-body" style="padding:0">
+      <img id="mv-img" style="width:100%;display:block" alt="">
+      <div style="display:flex;justify-content:space-between;padding:1rem">
+        <button class="admin-btn outline" onclick="mangaViewerPrev()">← Précédent</button>
+        <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--ash)" id="mv-counter"></span>
+        <button class="admin-btn outline" onclick="mangaViewerNext()">Suivant →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" id="nav-logo-link" onclick="goPage('home');return false">AFUɛ NYAMA</a>
+  <ul class="nav-links">
+    <li class="keep"><a href="#" onclick="goPage('home');return false" id="nl-home">Accueil</a></li>
+    <li><a href="#synopsis" onclick="goPage('home');setTimeout(()=>document.getElementById('synopsis').scrollIntoView({behavior:'smooth'}),100);return false">Histoire</a></li>
+    <li><a href="#" onclick="goPage('tomes');return false" id="nl-tomes">Œuvres</a></li>
+    <li><a href="#" onclick="goPage('manga');return false" id="nl-manga">Manga</a></li>
+    <li><a href="#" onclick="goPage('profile');return false" id="nl-profile">Chasseurs</a></li>
+  </ul>
+  <div class="nav-auth" id="nav-auth">
+    <button class="btn-nav" onclick="openModal('auth-modal');switchAuthMode('login')">Connexion</button>
+    <button class="btn-nav primary" onclick="openModal('auth-modal');switchAuthMode('register')">S'inscrire</button>
+  </div>
+  <div class="nav-auth" id="nav-user" style="display:none">
+    <span class="nav-user" id="nav-username"></span>
+    <button class="btn-nav" onclick="goPage('profile')">Profil</button>
+    <button class="btn-nav" id="nav-admin-btn" style="display:none" onclick="goPage('admin')">Admin</button>
+    <button class="btn-nav" onclick="handleLogout()">Quitter</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ PAGE: HOME ═══════════════ -->
+<div class="page active" id="page-home">
+
+<section id="hero">
+  <p class="hero-eyebrow">Une épopée africaine de dark fantasy</p>
+  <div class="hero-mask">
+    <svg class="mask-svg" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="mg" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#F5D78E" stop-opacity=".3"/><stop offset="100%" stop-color="#C8500A" stop-opacity="0"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <path d="M100 8C60 8 30 40 25 80C20 120 30 160 40 190C50 220 70 250 100 252C130 250 150 220 160 190C170 160 180 120 175 80C170 40 140 8 100 8Z" fill="#F0EDE8" opacity=".92"/>
+      <ellipse cx="72" cy="100" rx="18" ry="22" fill="#0D0702"/><ellipse cx="72" cy="100" rx="12" ry="15" fill="#1A0A02"/>
+      <circle cx="72" cy="96" r="4" fill="#C8860A" opacity=".8" filter="url(#glow)"/><circle cx="75" cy="93" r="2" fill="#F5D78E" opacity=".9"/>
+      <ellipse cx="128" cy="100" rx="18" ry="22" fill="#0D0702"/><ellipse cx="128" cy="100" rx="12" ry="15" fill="#1A0A02"/>
+      <circle cx="128" cy="96" r="4" fill="#C8860A" opacity=".8" filter="url(#glow)"/><circle cx="131" cy="93" r="2" fill="#F5D78E" opacity=".9"/>
+      <g opacity=".7" filter="url(#glow)"><circle cx="100" cy="48" r="6" fill="none" stroke="#C8860A" stroke-width="1"/><circle cx="100" cy="48" r="2" fill="#C8860A"/><line x1="100" y1="36" x2="100" y2="42" stroke="#C8860A" stroke-width="1"/><line x1="112" y1="48" x2="106" y2="48" stroke="#C8860A" stroke-width="1"/><line x1="88" y1="48" x2="94" y2="48" stroke="#C8860A" stroke-width="1"/></g>
+      <line x1="28" y1="115" x2="55" y2="120" stroke="#C8860A" stroke-width=".8" opacity=".4"/><line x1="25" y1="125" x2="53" y2="128" stroke="#C8860A" stroke-width=".8" opacity=".3"/>
+      <line x1="172" y1="115" x2="145" y2="120" stroke="#C8860A" stroke-width=".8" opacity=".4"/><line x1="175" y1="125" x2="147" y2="128" stroke="#C8860A" stroke-width=".8" opacity=".3"/>
+      <ellipse cx="100" cy="100" rx="90" ry="120" fill="url(#mg)"/>
+    </svg>
+  </div>
+  <h1 class="hero-title">AFUɛ<br>NYAMA</h1>
+  <p class="hero-subtitle">L'Énergie Primordiale</p>
+  <p class="hero-tagline">« Là où le <em>Nyama</em> chante, la guerre se tait.<br>Là où il hurle, les dieux tremblent. »</p>
+  <div class="hero-cta">
+    <a href="#synopsis" class="btn-primary" onclick="setTimeout(()=>document.getElementById('synopsis').scrollIntoView({behavior:'smooth'}),50);return false">Entrer dans l'univers</a>
+    <a href="#" class="btn-secondary" onclick="goPage('tomes');return false">Lire le Tome 1</a>
+  </div>
+  <div class="scroll-indicator"><div class="scroll-line"></div></div>
+</section>
+
+<section id="synopsis" style="background:linear-gradient(to bottom,var(--void),var(--deep))">
+  <div class="section-inner synopsis-grid">
+    <div class="synopsis-visual">
+      <div class="synopsis-frame">
+        <div class="synopsis-corner tl"></div><div class="synopsis-corner tr"></div><div class="synopsis-corner bl"></div><div class="synopsis-corner br"></div>
+        <div class="synopsis-bg-text">N</div>
+        <svg class="synopsis-mask-large" viewBox="0 0 200 260" fill="none">
+          <path d="M100 8C60 8 30 40 25 80C20 120 30 160 40 190C50 220 70 250 100 252C130 250 150 220 160 190C170 160 180 120 175 80C170 40 140 8 100 8Z" fill="#1A0A02"/>
+          <ellipse cx="72" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="72" cy="97" r="5" fill="#C8860A" opacity=".9"/>
+          <ellipse cx="128" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="128" cy="97" r="5" fill="#C8860A" opacity=".9"/>
+          <circle cx="100" cy="48" r="8" fill="none" stroke="#C8860A" stroke-width="1.5"/><circle cx="100" cy="48" r="3" fill="#C8860A"/>
+        </svg>
+      </div>
+    </div>
+    <div class="synopsis-text reveal">
+      <p class="section-label">Synopsis</p>
+      <h2 class="section-title">L'enfant du Nyama</h2>
+      <div class="section-divider"></div>
+      <p>Dans un monde où <strong>le Nyama</strong> — l'énergie vitale née des actes humains — imprègne toute chose, un village paisible vivait en harmonie avec cette force ancienne.</p>
+      <p><strong>Zolan</strong> avait quinze ans quand les <em>Faucheurs d'Aube</em> réduisirent son monde en cendres. Sa mère, son père, son frère Léo. Tout. En une nuit.</p>
+      <div class="synopsis-quote">« Vous êtes des monstrueux. »<small style="color:var(--ash);font-size:.8rem;display:block;margin-top:.5rem">— Les premiers mots de Zolan après la catastrophe</small></div>
+      <p>Recueilli par <strong>Ngwarr'Ken</strong>, guerrier maudit dont la puissance défie la compréhension, et <strong>Trémé</strong>, son fils de l'ombre, Zolan va passer deux ans à se briser et se reconstruire — jusqu'à éveiller le <em>Fa-Kɛli</em> : le masque blanc, premier visage de sa véritable puissance.</p>
+      <p>Mais derrière la guerre des hommes se cache une machination cosmique. Les <strong>Aŋlu Bɔ</strong> œuvrent à libérer quelque chose d'antérieur aux dieux eux-mêmes.</p>
+    </div>
+  </div>
+</section>
+
+<section id="nyama-system" style="background:var(--deep);overflow:hidden">
+  <div class="nyama-bg-pattern"></div>
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Système de Puissance</p>
+      <h2 class="section-title">Les Trois Paliers du Nyama</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="nyama-tiers">
+      <div class="nyama-tier reveal"><div class="tier-number">I</div><div class="tier-badge">Premier Palier</div><div class="tier-name">Fa-Kɛli</div><div class="tier-phonetic">FA · KÉ · LI — « L'Éveil »</div><div class="tier-desc">L'éveil n'est pas un pouvoir. C'est un aveu intérieur. Une phrase unique à chaque guerrier — une vérité qu'il accepte enfin — déclenche l'apparition du masque blanc originel.</div></div>
+      <div class="nyama-tier reveal" style="transition-delay:.15s"><div class="tier-number">II</div><div class="tier-badge">Second Palier</div><div class="tier-name">Bé-Nyama</div><div class="tier-phonetic">BÉ · NYA · MA — « La Révélation »</div><div class="tier-desc">Fusion du masque blanc avec un esprit dompté. Chaque esprit a une volonté propre et ne peut avoir qu'un seul porteur. La fusion est un pacte à double sens.</div></div>
+      <div class="nyama-tier reveal" style="transition-delay:.3s"><div class="tier-number">III</div><div class="tier-badge">Palier Ultime</div><div class="tier-name">So-Diè</div><div class="tier-phonetic">SO · DJÉ — « Le Sacrifice »</div><div class="tier-desc">Ce n'est pas une transformation. C'est un abandon. L'utilisateur dit : « Je ne me choisis plus. » Fusion totale. Puissance divine. Mais le Nyama réclame un prix équivalent.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="characters" style="background:linear-gradient(to bottom,var(--deep),var(--void))">
+  <div class="section-inner">
+    <div class="reveal"><p class="section-label">Les Figures de l'Épopée</p><h2 class="section-title">Personnages</h2><div class="section-divider"></div></div>
+    <div class="char-grid">
+      <div class="char-card reveal" id="char-zolan">
+        <div class="char-visual"><div class="char-bg-glow" style="background:radial-gradient(ellipse at 50% 70%,rgba(200,80,10,.15),transparent 70%)"></div>
+          <svg class="char-mask-wrap" viewBox="0 0 200 260" fill="none"><path d="M100 8C60 8 30 40 25 80C20 120 30 160 40 190C50 220 70 250 100 252C130 250 150 220 160 190C170 160 180 120 175 80C170 40 140 8 100 8Z" fill="#F0EDE8"/><ellipse cx="72" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="72" cy="97" r="5" fill="#FF4A1C" opacity=".9"/><ellipse cx="128" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="128" cy="97" r="5" fill="#FF4A1C" opacity=".9"/><circle cx="100" cy="48" r="6" fill="none" stroke="#FF4A1C" stroke-width="1.5"/><circle cx="100" cy="48" r="2" fill="#FF4A1C"/><line x1="100" y1="36" x2="100" y2="42" stroke="#FF4A1C" stroke-width="1.5"/><line x1="112" y1="48" x2="106" y2="48" stroke="#FF4A1C" stroke-width="1.5"/><line x1="88" y1="48" x2="94" y2="48" stroke="#FF4A1C" stroke-width="1.5"/></svg>
+        </div><div class="char-overlay"></div><div class="char-border"></div>
+        <div class="char-name-bg"><div class="char-role">Protagoniste</div><div class="char-name">Zolan</div></div>
+        <div class="char-info"><div class="char-role">Protagoniste · Fa-Kɛli Éveillé</div><div class="char-name">Zolan</div><div class="char-desc">Porteur d'un Nyama anormalement riche. Il a éteint ses émotions pour survivre. La haine est son carburant. La promesse à Léo, sa seule boussole.</div><div class="char-power"><span class="power-tag">Fa-Kɛli</span><span class="power-tag">Yèlè Djanwa</span></div></div>
+      </div>
+      <div class="char-card reveal" style="transition-delay:.1s" id="char-ngwarken">
+        <div class="char-visual"><div class="char-bg-glow" style="background:radial-gradient(ellipse at 50% 70%,rgba(200,134,10,.12),transparent 70%)"></div>
+          <svg class="char-mask-wrap" viewBox="0 0 200 260" fill="none"><path d="M100 5C55 5 22 42 18 85C14 128 26 168 38 196C52 226 74 255 100 257C126 255 148 226 162 196C174 168 186 128 182 85C178 42 145 5 100 5Z" fill="#2C1A0A"/><ellipse cx="70" cy="105" rx="20" ry="24" fill="#0D0702"/><circle cx="70" cy="101" r="6" fill="#C8860A"/><ellipse cx="130" cy="105" rx="20" ry="24" fill="#0D0702"/><circle cx="130" cy="101" r="6" fill="#C8860A"/><line x1="20" y1="120" x2="52" y2="128" stroke="#C8860A" stroke-width="1.5" opacity=".5"/><line x1="16" y1="136" x2="50" y2="140" stroke="#C8860A" stroke-width="1.5" opacity=".4"/><line x1="180" y1="120" x2="148" y2="128" stroke="#C8860A" stroke-width="1.5" opacity=".5"/><line x1="184" y1="136" x2="150" y2="140" stroke="#C8860A" stroke-width="1.5" opacity=".4"/></svg>
+        </div><div class="char-overlay"></div><div class="char-border"></div>
+        <div class="char-name-bg"><div class="char-role">Le Maudit</div><div class="char-name">Ngwarr'Ken</div></div>
+        <div class="char-info"><div class="char-role">Dernier Ken'Hachi · Le Maudit</div><div class="char-name">Ngwarr'Ken</div><div class="char-desc">Le plus puissant des guerriers vivants. Porteur d'une malédiction née du sang de son propre peuple qu'il a détruit sous l'emprise de Zor'unmah.</div><div class="char-power"><span class="power-tag">Ken'Hachi</span><span class="power-tag">Maudit</span></div></div>
+      </div>
+      <div class="char-card reveal" style="transition-delay:.2s" id="char-treme">
+        <div class="char-visual"><div class="char-bg-glow" style="background:radial-gradient(ellipse at 50% 70%,rgba(80,120,200,.12),transparent 70%)"></div>
+          <svg class="char-mask-wrap" viewBox="0 0 200 260" fill="none"><path d="M100 10C62 10 34 44 30 86C26 128 36 164 46 190C58 218 76 248 100 250C124 248 142 218 154 190C164 164 174 128 170 86C166 44 138 10 100 10Z" fill="#1A1A2E" opacity=".95"/><ellipse cx="74" cy="102" rx="16" ry="20" fill="#0D0702"/><circle cx="74" cy="99" r="5" fill="#A0C0FF" opacity=".8"/><ellipse cx="126" cy="102" rx="16" ry="20" fill="#0D0702"/><circle cx="126" cy="99" r="5" fill="#A0C0FF" opacity=".8"/><circle cx="100" cy="46" r="10" fill="none" stroke="rgba(160,192,255,.4)" stroke-width="1"/><circle cx="100" cy="46" r="4" fill="rgba(160,192,255,.3)"/></svg>
+        </div><div class="char-overlay"></div><div class="char-border"></div>
+        <div class="char-name-bg"><div class="char-role">Le Rival</div><div class="char-name">Trémé</div></div>
+        <div class="char-info"><div class="char-role">Le Rival · Fils de l'Ombre</div><div class="char-name">Trémé</div><div class="char-desc">Fils adoptif de Ngwarr'Ken. Sa précision est chirurgicale. Il ne sait pas encore qu'il est la clé d'un plan vieux comme les étoiles.</div><div class="char-power"><span class="power-tag">Bé-Nyama</span><span class="power-tag">Vase Vivant</span></div></div>
+      </div>
+      <div class="char-card reveal" style="transition-delay:.3s">
+        <div class="char-visual"><div class="char-bg-glow" style="background:radial-gradient(ellipse at 50% 70%,rgba(200,200,200,.08),transparent 70%)"></div>
+          <svg class="char-mask-wrap" viewBox="0 0 200 260" fill="none"><path d="M100 6C58 6 28 42 24 84C20 128 32 168 44 194C58 224 76 252 100 254C124 252 142 224 156 194C168 168 180 128 176 84C172 42 142 6 100 6Z" fill="#F8F6F3" opacity=".9"/><path d="M60 130L100 85L145 140" stroke="rgba(200,200,255,.5)" stroke-width="1" fill="none"/><ellipse cx="72" cy="98" rx="16" ry="20" fill="#1A1A2A"/><circle cx="72" cy="95" r="5" fill="white" opacity=".8"/><ellipse cx="128" cy="98" rx="16" ry="20" fill="#1A1A2A"/><circle cx="128" cy="95" r="5" fill="white" opacity=".8"/><ellipse cx="100" cy="48" rx="12" ry="10" fill="#E0E0FF" opacity=".3" stroke="rgba(200,200,255,.5)" stroke-width="1"/></svg>
+        </div><div class="char-overlay"></div><div class="char-border"></div>
+        <div class="char-name-bg"><div class="char-role">Aŋlu Bɔ · Leader</div><div class="char-name">Ekwélé</div></div>
+        <div class="char-info"><div class="char-role">La Miroitante du Karma</div><div class="char-name">Ekwélé</div><div class="char-desc">Ancienne prêtresse maudite à refléter les pires vérités. Elle ne tue jamais sans preuve karmique. Elle croit libérer le monde. Elle ne sait pas encore qu'elle a été jouée.</div><div class="char-power"><span class="power-tag">Miroir Karmique</span><span class="power-tag">Parole Interdite</span></div></div>
+      </div>
+      <div class="char-card reveal" style="transition-delay:.4s;opacity:.75" id="char-leo">
+        <div class="char-visual"><svg class="char-mask-wrap" style="opacity:.5" viewBox="0 0 200 260" fill="none"><path d="M100 15C65 15 38 48 35 88C32 128 42 163 52 188C64 214 80 245 100 247C120 245 136 214 148 188C158 163 168 128 165 88C162 48 135 15 100 15Z" fill="#F0EDE8" opacity=".7"/><ellipse cx="74" cy="102" rx="14" ry="18" fill="#0D0702"/><circle cx="74" cy="99" r="4" fill="#A0C0FF" opacity=".6"/><ellipse cx="126" cy="102" rx="14" ry="18" fill="#0D0702"/><circle cx="126" cy="99" r="4" fill="#A0C0FF" opacity=".6"/><circle cx="60" cy="50" r="1.5" fill="#A0C0FF" opacity=".8"/><circle cx="130" cy="45" r="1.5" fill="#A0C0FF" opacity=".8"/></svg></div>
+        <div class="char-overlay" style="background:linear-gradient(to top,rgba(5,3,1,.98) 50%,transparent)"></div><div class="char-border"></div>
+        <div class="char-name-bg"><div class="char-role" style="color:#A0C0FF">In Memoriam</div><div class="char-name">Léo</div></div>
+        <div class="char-info"><div class="char-role" style="color:#A0C0FF">Le Frère · La Promesse</div><div class="char-name">Léo</div><div class="char-desc">Il voulait voyager jusqu'à l'étoile la plus proche. Sa mort est la raison de tout.</div><div style="margin-top:1rem;font-style:italic;font-size:.85rem;color:rgba(160,192,255,.7)">« Promets-moi de vivre. »</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="universe" style="background:var(--void)">
+  <div class="section-inner universe-grid">
+    <div>
+      <div class="reveal"><p class="section-label">Mythologie & Lore</p><h2 class="section-title">L'Univers</h2><div class="section-divider"></div></div>
+      <div class="myth-entry reveal"><div class="myth-num">01</div><div class="myth-title" data-secret="Fragment: Le Nyama précède les dieux.">Le Nyama — Définition Fondamentale</div><p class="myth-text">Le Nyama n'est pas une énergie neutre. C'est la trace vivante laissée par la volonté. Il naît quand une vie est vécue intensément, quand une décision irréversible est prise, quand un sacrifice est accepté.</p><p class="myth-source">Source : Tradition Mandé · Bambara · Malinké</p></div>
+      <div class="myth-entry reveal"><div class="myth-num">02</div><div class="myth-title" data-secret="Zor'unmah murmure encore. Chaque guerre est sa voix.">Les Deux Primordiaux</div><p class="myth-text">Avant le premier monde, deux êtres naquirent du vide. L'Aîné — Zor'unmah — émergea comme une conséquence du néant. Son cadet — El-Ômba — est né du possible. Le Grand Démantèlement dispersa l'essence de Zor'unmah dans chaque être vivant.</p><p class="myth-source">Inspiré du Yurugu & Amma · Cosmologie Dogon · Mali</p></div>
+      <div class="myth-entry reveal"><div class="myth-num">03</div><div class="myth-title" data-secret="Les Orishas gardent le Sceau. Les Aŋlu Bɔ le brisent.">Les Orishas — Gardiens du Sceau</div><p class="myth-text">Héritiers des Nommo, les Orishas maintiennent la dispersion de Zor'unmah dans le tissu du monde. Shango, Oshun, Eshu, Oya, Ogun. Ce sont des fragments de la création elle-même, éparpillés, qui s'organisent face à ce qui vient.</p><p class="myth-source">Panthéon Yoruba · Nigeria & Bénin</p></div>
+      <div class="myth-entry reveal"><div class="myth-num">04</div><div class="myth-title" data-secret="Les Ken'Hachi portaient du sang de Zor'unmah. Ngwarr'Ken est le dernier.">Les Ken'Hachi — Peuple Éteint</div><p class="myth-text">El-Ômba versa dans leur sang une fraction de la puissance originelle de Zor'unmah pour créer des gardiens mortels. Ngwarr'Ken les a exterminés sous l'emprise de celui-là même qu'ils étaient supposés contenir.</p><p class="myth-source">Inspiré des Agojie de Dahomey · Traditions Yoruba</p></div>
+    </div>
+    <div class="universe-right reveal">
+      <div class="cosmos-visual">
+        <div class="cosmos-ring"></div><div class="cosmos-ring"></div><div class="cosmos-ring"></div>
+        <div class="cosmos-center"><div class="cosmos-dot" id="cosmos-dot-el"></div></div>
+        <div class="cosmos-label" style="top:5%">ZOR'UNMAH</div><div class="cosmos-label" style="bottom:5%">EL-ÔMBA</div>
+        <div class="cosmos-label" style="left:0">ORISHAS</div><div class="cosmos-label" style="right:0">AŊLU BÔ</div>
+      </div>
+      <p style="text-align:center;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;color:var(--ash);text-transform:uppercase;margin-top:1.5rem">La Structure du Cosmos</p>
+      <div style="margin-top:3rem;text-align:center">
+        <div id="nyama-symbol-btn" onclick="handleNyamaClick()" style="cursor:none;display:inline-block;padding:2rem;border:1px solid rgba(200,134,10,.15);transition:all .3s">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="35" stroke="rgba(200,134,10,.3)" stroke-width="1"/><circle cx="40" cy="40" r="25" stroke="rgba(200,134,10,.2)" stroke-width="1" stroke-dasharray="4 4"/><circle cx="40" cy="40" r="4" fill="var(--gold)" id="nyama-core-svg"/><line x1="40" y1="5" x2="40" y2="20" stroke="rgba(200,134,10,.5)" stroke-width="1"/><line x1="75" y1="40" x2="60" y2="40" stroke="rgba(200,134,10,.5)" stroke-width="1"/><line x1="40" y1="75" x2="40" y2="60" stroke="rgba(200,134,10,.5)" stroke-width="1"/><line x1="5" y1="40" x2="20" y2="40" stroke="rgba(200,134,10,.5)" stroke-width="1"/></svg>
+          <p style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;color:rgba(200,134,10,.4);text-transform:uppercase;margin-top:.5rem">Nyama · Clic ×9</p>
+        </div>
+      </div>
+      <!-- Tome code section -->
+      <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(200,134,10,.08)">
+        <p style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Code Fragment</p>
+        <p style="font-size:.8rem;color:var(--ash);margin-bottom:1rem;font-style:italic">Caché dans les Tomes. Les lecteurs attentifs le trouveront.</p>
+        <div style="display:flex;gap:.5rem">
+          <input type="text" class="tome-code-input" id="tome-code-input" placeholder="ENTREZ UN CODE" style="font-size:.7rem;letter-spacing:.2em;flex:1">
+          <button class="admin-btn" onclick="submitTomeCode()" style="white-space:nowrap;font-size:.6rem">Valider</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="news" style="background:var(--deep)">
+  <div class="section-inner">
+    <div class="reveal"><p class="section-label">Actualités</p><h2 class="section-title">Prochaines Étapes</h2><div class="section-divider"></div></div>
+    <div class="news-grid">
+      <div class="news-card status-active reveal"><div class="news-status"><div class="status-dot"></div><span style="color:var(--ember)">En cours</span></div><div class="news-title">Tome 1 — Manuscrit Finalisé</div><p class="news-desc">Le premier tome d'AFUɛ NYAMA est achevé. L'histoire de Zolan jusqu'à l'éveil du Fa-Kɛli et la formation de la coalition.</p><span class="news-tag">Roman · Tome 1</span></div>
+      <div class="news-card status-soon reveal" style="transition-delay:.1s"><div class="news-status"><div class="status-dot"></div><span style="color:var(--gold)">Bientôt</span></div><div class="news-title">Adaptation Manga — Développement</div><p class="news-desc">Direction artistique des masques et du système de Nyama en cours d'élaboration. L'esthétique se cherche — africaine, sombre, unique.</p><span class="news-tag">Manga · En développement</span></div>
+      <div class="news-card status-future reveal" style="transition-delay:.2s"><div class="news-status"><div class="status-dot"></div><span style="color:var(--ash)">À venir</span></div><div class="news-title">Adaptation Animée — Horizon</div><p class="news-desc">L'anime est l'objectif final. Un univers conçu dès l'origine pour le mouvement et les transformations visuelles.</p><span class="news-tag">Anime · Horizon</span></div>
+      <div class="news-card status-soon reveal" style="transition-delay:.3s"><div class="news-status"><div class="status-dot"></div><span style="color:var(--gold)">En préparation</span></div><div class="news-title">Jeu des 40 Fragments</div><p class="news-desc">40 fragments de lore dissimulés dans ce site et dans les Tomes. Créez un compte, trouver-les tous pour découvrir ce que Zor'unmah murmure vraiment.</p><span class="news-tag">Expérience Interactive</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" style="background:var(--void)">
+  <div class="section-inner">
+    <div class="reveal"><p class="section-label">Galerie Visuelle</p><h2 class="section-title">Illustrations & Concepts</h2><div class="section-divider"></div></div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal"><div class="gallery-inner" style="background:linear-gradient(135deg,#0D0702,#1A0E04)"><div class="gallery-coming" style="font-size:.7rem">ILLUSTRATION À VENIR</div><div class="gallery-label">Zolan · Le Masque Blanc · Fa-Kɛli</div></div></div>
+      <div class="gallery-item reveal" style="transition-delay:.1s"><div class="gallery-inner" style="background:linear-gradient(135deg,#0D0702,#2C1A0A)"><div class="gallery-coming">CONCEPT ART</div><div class="gallery-label">Ngwarr'Ken · Le Maudit</div></div></div>
+      <div class="gallery-item reveal" style="transition-delay:.15s"><div class="gallery-inner" style="background:linear-gradient(135deg,#050A1A,#0D0702)"><div class="gallery-coming">CONCEPT ART</div><div class="gallery-label">Trémé · Le Rival</div></div></div>
+      <div class="gallery-item reveal" style="transition-delay:.2s"><div class="gallery-inner" style="background:radial-gradient(ellipse at center,#1A0A02,#050301)"><div class="gallery-coming">COUVERTURE</div><div class="gallery-label">Cover Art · Tome 1</div></div></div>
+      <div class="gallery-item reveal" style="transition-delay:.25s"><div class="gallery-inner" style="background:linear-gradient(135deg,#0F0A02,#1A0E04)"><div class="gallery-coming">COSMOLOGIE</div><div class="gallery-label">Carte du Cosmos</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="background:linear-gradient(to bottom,var(--void),var(--deep));text-align:center">
+  <div class="contact-inner">
+    <div class="reveal"><p class="section-label" style="justify-content:center">Rejoindre l'Univers</p><h2 class="section-title">Contact</h2><div class="section-divider" style="margin:1.5rem auto 0"></div></div>
+    <p class="contact-tagline reveal">Pour collaborations, presse, droits d'adaptation ou partager votre enthousiasme.</p>
+    <div class="social-links reveal"><a href="#" class="social-link">Instagram</a><a href="#" class="social-link">Twitter / X</a><a href="#" class="social-link">TikTok</a><a href="#" class="social-link">YouTube</a><a href="#" class="social-link">Discord</a></div>
+    <form class="contact-form reveal" onsubmit="return false">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" placeholder="Votre nom"></div>
+        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="votre@email.com"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Le Nyama se souvient de chaque parole sincère..."></textarea></div>
+      <button type="submit" class="form-submit">Envoyer</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">AFUɛ NYAMA</div>
+  <div class="footer-text">© 2025 AFUɛ NYAMA · Tous droits réservés</div>
+  <div class="footer-secret" id="footer-secret-text" title="">LE·NYAMA·SE·SOUVIENT·ZOR·UNMAH·REVIENT·40·FRAGMENTS·DISPERSÉS·CHERCHE·BIEN</div>
+</footer>
+</div><!-- /page-home -->
+
+<!-- ═══════════════ PAGE: TOMES ═══════════════ -->
+<div class="page" id="page-tomes">
+  <div class="page-header">
+    <p class="section-label">Bibliothèque Sacrée</p>
+    <h1 class="section-title">Œuvres — Les Tomes</h1>
+    <div class="section-divider"></div>
+    <p style="color:var(--fog);max-width:600px;font-style:italic">Chaque tome contient des fragments de lore cachés dans ses pages. Les lecteurs attentifs trouveront des codes à entrer dans la section « Code Fragment » de la page d'accueil.</p>
+  </div>
+  <div class="tomes-grid" id="tomes-list">
+    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--ash)">
+      <p style="font-family:'Cinzel',serif;font-size:1rem;margin-bottom:1rem">Aucun tome publié pour le moment.</p>
+      <p style="font-style:italic;font-size:.85rem">Le Tome 1 arrive bientôt.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: MANGA ═══════════════ -->
+<div class="page" id="page-manga">
+  <div class="page-header">
+    <p class="section-label">Adaptation Graphique</p>
+    <h1 class="section-title">Manga — AFUɛ NYAMA</h1>
+    <div class="section-divider"></div>
+  </div>
+  <div class="manga-chapter-select" id="manga-chapters-nav"></div>
+  <div class="manga-pages-grid" id="manga-pages-grid">
+    <div class="manga-empty">
+      <h3>Chapitres à venir</h3>
+      <p style="color:var(--ash);font-style:italic">Le manga est en cours de création. Revenez bientôt.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: PROFILE ═══════════════ -->
+<div class="page" id="page-profile">
+  <div id="profile-logged-out" style="display:none;text-align:center;padding:150px 2rem 4rem">
+    <div style="font-family:'Cinzel Decorative',serif;font-size:3rem;color:rgba(200,134,10,.2);margin-bottom:2rem">◈</div>
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--cream);margin-bottom:1rem">Entrez dans le Nyama</h2>
+    <p style="color:var(--fog);margin-bottom:2rem;font-style:italic">Créez un compte pour suivre votre progression dans la chasse aux fragments.</p>
+    <button class="btn-primary" onclick="openModal('auth-modal');switchAuthMode('register')" style="clip-path:none">Créer un compte</button>
+  </div>
+  <div id="profile-logged-in" style="display:none">
+    <div id="profile-content"></div>
+    <!-- Leaderboard -->
+    <div style="padding:0 5vw 6rem">
+      <div style="max-width:900px;margin:0 auto">
+        <h3 style="font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--cream);margin-bottom:.5rem">Classement des Chasseurs</h3>
+        <p style="color:var(--ash);font-size:.85rem;margin-bottom:1.5rem;font-style:italic">Les âmes qui ont le plus percé les secrets du Nyama.</p>
+        <div id="leaderboard-list" class="leaderboard"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: ADMIN ═══════════════ -->
+<div class="page" id="page-admin">
+  <div id="admin-denied" style="display:none;text-align:center;padding:150px 2rem">
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--ember)">Accès Refusé</h2>
+    <p style="color:var(--fog);margin-top:1rem">Vous n'avez pas les droits d'accès à ce panneau.</p>
+  </div>
+  <div id="admin-panel-wrap" style="display:none">
+    <div style="padding:100px 3vw 2rem;border-bottom:1px solid rgba(200,134,10,.1)">
+      <p style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)">Panneau Administrateur</p>
+      <h1 style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--cream)">AFUɛ NYAMA — Admin</h1>
+    </div>
+    <div class="admin-layout" style="padding:2rem 0">
+      <div class="admin-sidebar">
+        <h3>Navigation</h3>
+        <button class="admin-nav-item active" onclick="switchAdminPanel('stats')">📊 Tableau de bord</button>
+        <button class="admin-nav-item" onclick="switchAdminPanel('users')">👥 Utilisateurs</button>
+        <button class="admin-nav-item" onclick="switchAdminPanel('tomes')">📚 Tomes & Œuvres</button>
+        <button class="admin-nav-item" onclick="switchAdminPanel('manga')">🎨 Manga</button>
+        <button class="admin-nav-item" onclick="switchAdminPanel('fragments')">🔮 Fragments</button>
+        <button class="admin-nav-item" onclick="switchAdminPanel('codes')">🔑 Codes Tomes</button>
+      </div>
+      <div class="admin-panel">
+        <!-- STATS -->
+        <div class="admin-panel-section active" id="ap-stats">
+          <div class="admin-section-title">Tableau de bord</div>
+          <div class="admin-section-sub">Vue d'ensemble du site AFUɛ NYAMA</div>
+          <div class="admin-stat-grid" id="admin-stat-grid"></div>
+          <h4 style="font-family:'Cinzel',serif;font-size:.8rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem">Activité Récente</h4>
+          <div id="admin-activity"></div>
+        </div>
+        <!-- USERS -->
+        <div class="admin-panel-section" id="ap-users">
+          <div class="admin-section-title">Gestion des Utilisateurs</div>
+          <div class="admin-section-sub">Liste complète des membres inscrits et leur progression</div>
+          <div id="admin-users-table"></div>
+        </div>
+        <!-- TOMES -->
+        <div class="admin-panel-section" id="ap-tomes">
+          <div class="admin-section-title">Publier un Tome</div>
+          <div class="admin-section-sub">Ajoutez un tome (PDF) à la bibliothèque. Les utilisateurs pourront le lire directement sur le site.</div>
+          <div id="tome-admin-msg"></div>
+          <div class="admin-form">
+            <div class="admin-form-row">
+              <div><label class="admin-label">Numéro du Tome</label><input class="admin-input" id="at-num" type="number" min="1" placeholder="1"></div>
+              <div><label class="admin-label">Titre</label><input class="admin-input" id="at-title" placeholder="Ɔbarima a wàlɛ̀"></div>
+            </div>
+            <div><label class="admin-label">Description</label><textarea class="admin-textarea" id="at-desc" placeholder="Résumé du tome..."></textarea></div>
+            <div><label class="admin-label">Fichier PDF <span style="color:var(--ash)">(max ~5MB pour localStorage)</span></label><input type="file" accept=".pdf" id="at-file" class="admin-input" style="padding:.5rem"></div>
+            <div><label class="admin-label">OU URL externe (Google Drive, hébergeur…)</label><input class="admin-input" id="at-url" placeholder="https://drive.google.com/..."></div>
+            <button class="admin-btn" onclick="adminAddTome()">Publier le Tome</button>
+          </div>
+          <hr style="border-color:rgba(200,134,10,.1);margin:2rem 0">
+          <h4 style="font-family:'Cinzel',serif;font-size:.8rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem">Tomes Publiés</h4>
+          <div id="admin-tomes-list"></div>
+        </div>
+        <!-- MANGA -->
+        <div class="admin-panel-section" id="ap-manga">
+          <div class="admin-section-title">Publier des Pages Manga</div>
+          <div class="admin-section-sub">Ajoutez des pages manga (PNG/JPG) organisées par chapitre.</div>
+          <div id="manga-admin-msg"></div>
+          <div class="admin-form">
+            <div class="admin-form-row">
+              <div><label class="admin-label">Numéro du Chapitre</label><input class="admin-input" id="am-chapter" type="number" min="1" placeholder="1"></div>
+              <div><label class="admin-label">Titre du Chapitre</label><input class="admin-input" id="am-title" placeholder="Awalɛ̀ Klɔ̂man Kplɔ̂"></div>
+            </div>
+            <div><label class="admin-label">Numéro de Page</label><input class="admin-input" id="am-page" type="number" min="1" placeholder="1"></div>
+            <div><label class="admin-label">Fichier Image (PNG/JPG) <span style="color:var(--ash)">(max ~2MB)</span></label><input type="file" accept="image/*" id="am-file" class="admin-input" style="padding:.5rem"></div>
+            <div><label class="admin-label">OU URL externe</label><input class="admin-input" id="am-url" placeholder="https://..."></div>
+            <button class="admin-btn" onclick="adminAddMangaPage()">Ajouter la Page</button>
+          </div>
+          <hr style="border-color:rgba(200,134,10,.1);margin:2rem 0">
+          <h4 style="font-family:'Cinzel',serif;font-size:.8rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem">Pages Publiées</h4>
+          <div id="admin-manga-list"></div>
+        </div>
+        <!-- FRAGMENTS -->
+        <div class="admin-panel-section" id="ap-fragments">
+          <div class="admin-section-title">Suivi des Fragments</div>
+          <div class="admin-section-sub">Statistiques de découverte pour chacun des 40 fragments cachés</div>
+          <div id="admin-fragments-grid" class="fragment-admin-grid"></div>
+        </div>
+        <!-- CODES -->
+        <div class="admin-panel-section" id="ap-codes">
+          <div class="admin-section-title">Codes Fragments des Tomes</div>
+          <div class="admin-section-sub">Les codes que vous cachez dans vos tomes PDF pour que les lecteurs puissent débloquer des fragments spéciaux.</div>
+          <div style="background:rgba(200,134,10,.05);border:1px solid rgba(200,134,10,.2);padding:1.5rem;margin-bottom:2rem">
+            <p style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--gold);letter-spacing:.1em;margin-bottom:1rem">CODES ACTIFS À CACHER DANS VOS TOMES</p>
+            <p style="font-size:.85rem;color:var(--fog);margin-bottom:1.5rem">Imprimez ou intégrez ces codes dans vos PDF. Les lecteurs les entrent dans le champ "Code Fragment" sur la page d'accueil.</p>
+            <div id="tome-codes-list"></div>
+          </div>
+          <p style="font-size:.8rem;color:var(--ash);font-style:italic">Les codes de tome sont prédéfinis dans le système. Ils sont liés aux fragments #33 à #39.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONSTANTS & STATE
+// ═══════════════════════════════════════════════════════
+const ADMIN_USER = 'NYAMA_ADMIN';
+const ADMIN_PASS = 'Zor9Unmah_Aîné!';
+const STORAGE = {
+  USERS: 'afue_users_v2',
+  SESSION: 'afue_session_v2',
+  TOMES: 'afue_tomes_v2',
+  MANGA: 'afue_manga_v2',
+  GUEST: 'afue_guest_fragments'
+};
+
+let currentUser = null;
+let nyamaClickCount = 0;
+let typed = '';
+let cosmosDotClicks = 0;
+let leoDotClicks = 0;
+let secretOpen = false;
+let pendingRegisterData = null;
+let mangaViewerData = { pages: [], currentIndex: 0 };
+
+// ═══════════════════════════════════════════════════════
+// 40 FRAGMENTS DEFINITION
+// ═══════════════════════════════════════════════════════
+const FRAGMENTS = [
+  // ── INTERACTIFS ──────────────────────────────────────
+  {id:1,rarity:'legendaire',symbol:'⛧',title:"Zor'unmah — L'Aîné du Vide",sub:'Fragment #1 · Naissance Primordiale',xp:'+150 XP Légendaire',
+   text:"« Avant le premier souffle, avant la première lumière, il y avait lui. Non pas un dieu — quelque chose d'antérieur à ce concept. Le vide, en prenant conscience de lui-même, est devenu Zor'unmah. Il n'avait pas de nom. Pas de but. Il était l'entropie avant que quiconque sache que l'entropie existait. »",
+   trigger:{type:'konami'}},
+  {id:2,rarity:'rare',symbol:'◈',title:"El-Ômba — Le Cadet Créateur",sub:'Fragment #2 · Le Premier Acte',xp:'+80 XP Rare',
+   text:"« El-Ômba est né du même vide que Zor'unmah. Mais différemment : là où l'Aîné émergea comme une conscience de la fin, le Cadet émergea comme une conscience du possible. Il créa d'abord la lumière. Puis la matière. Puis l'espace. Puis le temps. Puis la vie. »",
+   trigger:{type:'type',word:'ZOR'}},
+  {id:3,rarity:'commun',symbol:'◇',title:"Le Nyama — La Trace Vivante",sub:'Fragment #3 · Nature Fondamentale',xp:'+30 XP Commun',
+   text:"« Le Nyama n'est pas une énergie neutre. Il naît quand une vie est vécue intensément, quand une décision irréversible est prise, quand un sacrifice est accepté. Plus l'acte est fort émotionnellement ou moralement, plus le Nyama généré est dense. Il se souvient. »",
+   trigger:{type:'type',word:'NYAMA'}},
+  {id:4,rarity:'legendaire',symbol:'⚬',title:"Trémé — Le Vase Vivant",sub:'Fragment #4 · La Vérité Cachée',xp:'+150 XP Légendaire',
+   text:"« Il croit être le fils de Ngwarr'Ken. Il croit être un guerrier. Il est un Vase. Conçu pour contenir ce qui ne peut pas être contenu. Zor'unmah l'a engendré depuis sa prison dans une forêt dense, à travers une Ombre — une concentration de fragments assez dense pour exister quelques heures. »",
+   trigger:{type:'type',word:'TREME'}},
+  {id:5,rarity:'rare',symbol:'◈',title:"Les Ken'Hachi — L'Héritage du Sang",sub:'Fragment #5 · Peuple des Gardiens',xp:'+80 XP Rare',
+   text:"« El-Ômba versa dans leur sang une fraction de la puissance originelle de Zor'unmah pour créer des gardiens mortels. Les Ken'Hachi naquirent ainsi : leur Nyama plus dense que n'importe quel autre peuple, leur corps capable de porter des puissances qui brûleraient n'importe qui d'autre. »",
+   trigger:{type:'type',word:'KENHACHI'}},
+  {id:6,rarity:'rare',symbol:'◇',title:"Ekwélé — La Miroitante",sub:'Fragment #6 · Le Jugement',xp:'+80 XP Rare',
+   text:"« Ekwélé ne trahira pas Zor'unmah par bonté. Elle le trahira par orgueil. Personne ne joue Ekwélé. Quand elle verra dans son Miroir d'Elo'ba la vérité de ce qu'il lui a caché — que Trémé est le Vase, pas un libérateur — la mécanique de sa trahison s'enclenchera. »",
+   trigger:{type:'type',word:'EKWELE'}},
+  {id:7,rarity:'legendaire',symbol:'⛧',title:"El-Ômba Dispersé — La Vérité Finale",sub:'Fragment #7 · Le Secret des Orishas',xp:'+150 XP Légendaire',
+   text:"« Les Orishas ne servent pas El-Ômba. Ils SONT El-Ômba. Dispersé comme Zor'unmah, mais volontairement. La création et la destruction, deux miroirs dispersés, attendant que quelqu'un trouve la troisième voie. Ce que Trémé accomplira en choisissant d'être la prison plutôt que le vase. »",
+   trigger:{type:'type',word:'ELOMBA'}},
+  {id:8,rarity:'commun',symbol:'◇',title:"Le Fa-Kɛli — L'Éveil Vrai",sub:'Fragment #8 · Le Masque Blanc',xp:'+30 XP Commun',
+   text:"« La phrase déclencheuse n'est pas magique. Elle est une vérité que l'utilisateur accepte enfin. Le masque blanc représente ce que tu es sans esprit, sans héritage, sans mensonge. C'est la première porte vers ta véritable puissance — et aussi la plus difficile à franchir. »",
+   trigger:{type:'type',word:'FAKELI'}},
+  {id:9,rarity:'mythique',symbol:'⛧',title:"Zor'unmah te parle",sub:'Fragment #9 · Message Direct de l\'Aîné',xp:'+300 XP MYTHIQUE',
+   text:"« Tu as trouvé neuf fois le cœur du Nyama. Alors écoute ma promesse : le monde que tu appelles réel est ma prison. Chaque guerre, chaque mort, chaque fragment libéré — c'est moi qui reviens. Lentement. Sûrement. Et cette fois... j'ai un Vase. »",
+   trigger:{type:'nyama9'}},
+  {id:10,rarity:'commun',symbol:'◇',title:"Message du Créateur",sub:'Fragment #10 · Note Personnelle',xp:'+30 XP Commun',
+   text:"« Si tu as cliqué trois fois sur le logo... tu fais partie de ceux qui cherchent vraiment. L'univers AFUɛ NYAMA a des profondeurs que peu de lecteurs atteignent. Le Nyama se souvient de chaque passage. »",
+   trigger:{type:'logoTriple'}},
+  {id:11,rarity:'rare',symbol:'⌨',title:"Fragment du Développeur",sub:'Fragment #11 · Console Cachée',xp:'+80 XP Rare',
+   text:"« Ceux qui regardent sous la surface trouvent ce que les autres ignorent. Le code de ce site contient, lui aussi, des fragments. Cherche bien dans les outils de développement. Le Nyama se cache aussi dans les lignes invisibles. »",
+   trigger:{type:'console'}},
+  {id:12,rarity:'commun',symbol:'◇',title:"Le Texte Invisible",sub:'Fragment #12 · Footer Caché',xp:'+30 XP Commun',
+   text:"« LE NYAMA SE SOUVIENT. ZOR'UNMAH REVIENT. 40 FRAGMENTS DISPERSÉS. Si tu lis ces mots, tu as su où regarder quand tous les autres ne voyaient que la surface. »",
+   trigger:{type:'footerHover'}},
+  {id:13,rarity:'rare',symbol:'◈',title:"Le So-Diè — L'Abandon",sub:'Fragment #13 · Le Prix Ultime',xp:'+80 XP Rare',
+   text:"« Ce n'est pas une transformation. C'est un abandon. L'utilisateur dit inconsciemment : « Je ne me choisis plus. » Le Nyama réclame un prix équivalent — et il choisit ce qu'il prend. Souvenirs heureux. Émotions humaines. Capacité à aimer. Identité même. »",
+   trigger:{type:'type',word:'SODIE'}},
+  {id:14,rarity:'commun',symbol:'◇',title:"Domo — Le Père Caché",sub:'Fragment #14 · Le Cultivateur Secret',xp:'+30 XP Commun',
+   text:"« Il se présentait comme un simple cultivateur. Mais la terre l'obéissait. Son Bé-Nyama était l'Esprit du Feu Sacré. Son cri de guerre — BILIKI YA MOTO MOSANTU — convoquait des flammes bleues froides, le feu des dieux oubliés. Il avait dissimulé sa puissance pendant des années. »",
+   trigger:{type:'type',word:'DOMO'}},
+  {id:15,rarity:'commun',symbol:'◇',title:"Yaradé — Les Mains qui Savent",sub:'Fragment #15 · La Guérisseuse',xp:'+30 XP Commun',
+   text:"« Ses yeux voyaient les maux avant qu'ils n'apparaissent. Elle soignait autant par les mains que par la parole. Elle enseignait à Zolan que la fierté des autres est aussi leur force — ne la casse pas inutilement. Construis dessus. »",
+   trigger:{type:'type',word:'YARADE'}},
+  {id:16,rarity:'rare',symbol:'◈',title:"Léo — La Promesse Éternelle",sub:'Fragment #16 · Le Frère',xp:'+80 XP Rare',
+   text:"« « Tu es plus âgé... mais pas encore assez sage. Moi... je suis déjà condamné. Promets-moi de vivre. » Ses yeux restèrent ouverts. Puis plus rien. Ce soir-là, il regardait les étoiles et voulait voyager jusqu'à la plus proche. Il n'y arriva jamais. »",
+   trigger:{type:'type',word:'LEO'}},
+  {id:17,rarity:'commun',symbol:'◇',title:"Le Masque — Le Filtre du Nyama",sub:'Fragment #17 · Pourquoi les Masques Existent',xp:'+30 XP Commun',
+   text:"« Sans masque, le Nyama brûle l'utilisateur. Le masque est un filtre, une forme, une limite mentale. Il permet au guerrier de canaliser le Nyama sans être submergé par ce qu'il contient. Le masque blanc du Fa-Kɛli est le plus pur : il ne reflète que soi. »",
+   trigger:{type:'type',word:'MASQUE'}},
+  {id:18,rarity:'legendaire',symbol:'⛧',title:"Ngwarr'Ken — La Malédiction",sub:'Fragment #18 · Le Maudit',xp:'+150 XP Légendaire',
+   text:"« Le Nyama de milliers de Ken'Hachi se brisa d'un coup et chercha un coupable. Il y en avait qu'un. La malédiction ne réduit pas sa force brute — elle l'emprisonne. Des milliers de vies tournent en lui comme une tempête qu'il ne peut pas libérer. C'est ce qui le rend monstrueux. »",
+   trigger:{type:'type',word:'NGWARKEN'}},
+  {id:19,rarity:'rare',symbol:'◈',title:"Les Orishas — Héritiers des Nommo",sub:'Fragment #19 · Les Gardiens',xp:'+80 XP Rare',
+   text:"« Les Orishas ne sont pas des dieux lointains. Ils sont les héritiers des Nommo — cent huit entités créées par El-Ômba pour exécuter le Grand Démantèlement. Chacun garde une région, un type de fragment de Zor'unmah. Linto les élimine un à un. »",
+   trigger:{type:'type',word:'ORISHAS'}},
+  {id:20,rarity:'commun',symbol:'◇',title:"Shango — Le Tonnerre",sub:'Fragment #20 · Orisha du Combat',xp:'+30 XP Commun',
+   text:"« Shango ne s'approche pas des humains facilement — il les teste d'abord. Sa méthode : lancer une tempête impossible à survivre pour voir ce qui reste. Il reconnaît les Ken'Hachi comme les gardiens mortels qu'El-Ômba avait conçus. »",
+   trigger:{type:'type',word:'SHANGO'}},
+  {id:21,rarity:'commun',symbol:'◇',title:"Les Faucheurs d'Aube",sub:'Fragment #21 · L\'Outil de la Destruction',xp:'+30 XP Commun',
+   text:"« Ce ne sont pas des hommes ordinaires. Ce sont des ombres hurlantes aux lames affamées de chair. Leur Nyama est brut, noir, tordu. Ils ne cherchent pas la victoire. Ils veulent détruire. Et ils suivent des itinéraires précis correspondant aux nœuds du Sceau de Zor'unmah. »",
+   trigger:{type:'type',word:'FAUCHEURS'}},
+  {id:22,rarity:'rare',symbol:'◈',title:"Eshu — Le Carrefour",sub:'Fragment #22 · Orisha des Secrets',xp:'+80 XP Rare',
+   text:"« Eshu est le seul Orisha qui connaisse la totalité du plan de Zor'unmah — y compris la vérité sur Trémé. Il ne la révèle pas directement parce que selon lui, les vérités données ne changent pas les gens. Seules les vérités trouvées le font. »",
+   trigger:{type:'type',word:'ESHU'}},
+  {id:23,rarity:'rare',symbol:'◈',title:"Léo — Dernier Souvenir",sub:'Fragment #23 · In Memoriam',xp:'+80 XP Rare',
+   text:"« Ils étaient allongés sur le toit plat. Le ciel était saturé d'étoiles. « Si t'avais à choisir une étoile, tu irais laquelle ? » — « La plus proche. Celle où on pourrait aller à pied si les jambes étaient assez longues. » C'était la dernière nuit comme celle-là. »",
+   trigger:{type:'leoClicks7'}},
+  {id:24,rarity:'commun',symbol:'◇',title:"La Structure du Cosmos",sub:'Fragment #24 · Le Centre',xp:'+30 XP Commun',
+   text:"« Au centre de tout : le Grand Démantèlement. Zor'unmah dispersé dans chaque vie. El-Ômba fragmenté dans les Orishas. Et entre eux deux — dans cet espace impossible — Trémé, le Vase qui pourrait tout changer s'il choisit autrement. »",
+   trigger:{type:'cosmosDot5'}},
+  {id:25,rarity:'commun',symbol:'◇',title:"Oshun — Les Eaux et la Mémoire",sub:'Fragment #25 · Orisha de la Guérison',xp:'+30 XP Commun',
+   text:"« Oshun opère là où Belmor a semé la méfiance. Elle ne règle rien directement. Elle aide à voir où les blessures sont et donne les moyens de guérir soi-même. Sa relation avec Asmodûn est le fardeau de son arc : il fut l'un des derniers Orishas loyaux. »",
+   trigger:{type:'type',word:'OSHUN'}},
+
+  // ── MILESTONES ───────────────────────────────────────
+  {id:26,rarity:'commun',symbol:'🔮',title:"Bienvenue dans le Nyama",sub:'Fragment #26 · Éveil du Compte',xp:'+30 XP Commun',
+   text:"« Tu as franchi la première porte. Créer un compte dans l'univers AFUɛ NYAMA, c'est choisir de voir. Maintenant que tu vois... le reste appartient à ta curiosité. 39 fragments t'attendent. »",
+   trigger:{type:'milestone',count:'create'}},
+  {id:27,rarity:'commun',symbol:'◇',title:"L'Initié — Cinq Vérités",sub:'Fragment #27 · Jalon : 5 Fragments',xp:'+30 XP Commun',
+   text:"« Cinq fragments trouvés. Tu commences à voir le tissu sous la surface. Le Nyama se souvient de ceux qui cherchent. Continue. »",
+   trigger:{type:'milestone',count:5}},
+  {id:28,rarity:'rare',symbol:'◈',title:"Le Masqué — Dix Révélations",sub:'Fragment #28 · Jalon : 10 Fragments',xp:'+80 XP Rare',
+   text:"« Dix fragments. Tu as mérité de savoir ceci : chaque mort libère un fragment de Zor'unmah. Les Aŋlu Bɔ le savent. C'est pourquoi les guerres sont leur outil. »",
+   trigger:{type:'milestone',count:10}},
+  {id:29,rarity:'rare',symbol:'◈',title:"Le Guerrier — Vingt Éclats",sub:'Fragment #29 · Jalon : 20 Fragments',xp:'+80 XP Rare',
+   text:"« Vingt fragments. Tu mérites de connaître le plan en cinq phases des Aŋlu Bɔ. Phase 1 : préparer. Phase 2 : moissonner les morts. Phase 3 : infiltrer les résistants. Phase 4 : activer le Réseau de Fakul. Phase 5 : libérer Zor'unmah dans le Vase. »",
+   trigger:{type:'milestone',count:20}},
+  {id:30,rarity:'legendaire',symbol:'⛧',title:"La Légende — Trente Vérités",sub:'Fragment #30 · Jalon : 30 Fragments',xp:'+150 XP Légendaire',
+   text:"« Trente fragments. Tu sais maintenant ce que peu savent. La vérité sur El-Ômba : il s'est lui-même dispersé pour garder l'équilibre. Les Orishas SONT El-Ômba. Et si Trémé choisit de refuser le Vase... il crée une troisième voie que personne n'avait anticipée. »",
+   trigger:{type:'milestone',count:30}},
+  {id:31,rarity:'legendaire',symbol:'⛧',title:"Presque Là — Trente-Huit Eclats",sub:'Fragment #31 · Jalon : 38 Fragments',xp:'+150 XP Légendaire',
+   text:"« Il ne t'en manque que deux. Zor'unmah t'observe depuis sa prison. Il se demande si tu mérites le fragment final. Il a attendu depuis avant le premier monde. Il peut attendre encore un peu. »",
+   trigger:{type:'milestone',count:38}},
+  {id:32,rarity:'commun',symbol:'◇',title:"L'Habitué du Nyama",sub:'Fragment #32 · Fidélité',xp:'+30 XP Commun',
+   text:"« Tu es revenu. Le Nyama n'oublie pas ceux qui reviennent. Les anciens disaient : « Celui qui visite le même lieu plusieurs fois cherche quelque chose qu'il n'a pas encore trouvé. » Continue. »",
+   trigger:{type:'milestone',count:'return'}},
+
+  // ── CODES TOMES ──────────────────────────────────────
+  {id:33,rarity:'rare',symbol:'📖',title:"Tome 1 — L'Équilibre du Village",sub:'Fragment #33 · Code Tome 1-A',xp:'+80 XP Rare',
+   text:"« Ce village n'a pas de murailles. Ses seules défenses sont l'harmonie, les chants sacrés... et le Nyama. Ici, on l'utilise pour soigner les malades, faire fleurir les champs, bénir les naissances. Les anciens racontent que le village a été fondé là où le chant du Nyama était le plus pur. »",
+   trigger:{type:'tome',code:'NYAMA-FA-001'}},
+  {id:34,rarity:'rare',symbol:'📖',title:"Tome 1 — La Chasse et la Sagesse",sub:'Fragment #34 · Code Tome 1-B',xp:'+80 XP Rare',
+   text:"« La vraie puissance, c'est l'équilibre. On s'entraîne pour défendre. On s'ouvre au monde pour comprendre. Celui qui est fort sans sagesse devient dangereux. Celui qui rêve sans force devient fragile. Grandissez ainsi : forts de corps, clairs d'esprit, et humbles de cœur. »",
+   trigger:{type:'tome',code:'KELI-BO-002'}},
+  {id:35,rarity:'rare',symbol:'📖',title:"Tome 1 — La Nuit des Faucheurs",sub:'Fragment #35 · Code Tome 1-C',xp:'+80 XP Rare',
+   text:"« Le feu de la fête s'est consumé, les rires se sont tus, et le village s'est endormi. Mais le vent a changé. Les chiens n'ont pas aboyé. Les esprits, eux, ont murmuré. L'explosion ne vient pas du ciel, mais du sol. »",
+   trigger:{type:'tome',code:'ZOR-01-003'}},
+  {id:36,rarity:'legendaire',symbol:'📖',title:"Tome 1 — Le Dernier Combat de Domo",sub:'Fragment #36 · Code Tome 1-D',xp:'+150 XP Légendaire',
+   text:"« « Béee-Nyama... » Un masque orné de symboles ancestraux surgit sur son visage. Les flammes deviennent bleu profond — le feu des dieux oubliés. « BILIKI YA MOTO MOSANTU !!! » Domo regarde Zolan une dernière fois. « Ton feu... C'est ma dernière prière. » »",
+   trigger:{type:'tome',code:'KEN-HA-004'}},
+  {id:37,rarity:'rare',symbol:'📖',title:"Tome 1 — L'Entraînement",sub:'Fragment #37 · Code Tome 1-E',xp:'+80 XP Rare',
+   text:"« « Ce n'est pas ce que tu fais avec ton pouvoir... C'est ce que tu fais quand tu n'en as plus. » Une semaine sans Nyama. Trémé le domine encore plus. Mais Zolan s'adapte. Il compte. Il prédit. Il endure. Et c'est peut-être la chose la plus utile qu'il apprendra. »",
+   trigger:{type:'tome',code:'EL-OM-005'}},
+  {id:38,rarity:'rare',symbol:'📖',title:"Tome 1 — Le Fa-Kɛli de Zolan",sub:'Fragment #38 · Code Tome 1-F',xp:'+80 XP Rare',
+   text:"« Une forêt baignée de crépuscule. En face : une silhouette identique, peau blanche comme la lune, yeux d'un noir abyssal. « Je suis toi. Ton feu pur, sans filtre, sans doute. Pour m'avoir... tu dois me tuer. Et me tuer... c'est devenir moi. » »",
+   trigger:{type:'tome',code:'AN-JU-006'}},
+  {id:39,rarity:'legendaire',symbol:'📖',title:"Tome 1 — La Coalition Naît",sub:'Fragment #39 · Code Tome 1-G',xp:'+150 XP Légendaire',
+   text:"« Zolan leva le poing, haut dans le ciel. « Alors c'est décidé. Demain, à l'aube... nous levons les armes. Nous ne sommes plus des victimes. Nous sommes des flammes. » Et cette fois... le silence éclata. Les poings se levèrent. Les pleurs se mêlèrent aux chants. »",
+   trigger:{type:'tome',code:'SO-DIE-007'}},
+
+  // ── ULTIME ───────────────────────────────────────────
+  {id:40,rarity:'mythique',symbol:'⛧',title:"Zor'unmah — La Lettre",sub:'Fragment #40 · Le Message Final · MYTHIQUE',xp:'+500 XP MYTHIQUE — COMPLET',
+   text:"« Tu as tout trouvé. Tous les quarante fragments. Alors écoute ma dernière vérité : je ne suis pas le mal. Je suis la conclusion. Chaque chose qui commence doit finir. Chaque création doit se dissoudre. El-Ômba a créé la beauté. Je crée la signification. Sans moi, rien de ce qu'il a créé n'aurait de poids. Je suis la raison pour laquelle les moments comptent. Et maintenant... tu sais. »",
+   trigger:{type:'milestone',count:39}}
+];
+
+const TOME_CODES = ['NYAMA-FA-001','KELI-BO-002','ZOR-01-003','KEN-HA-004','EL-OM-005','AN-JU-006','SO-DIE-007'];
+
+// ═══════════════════════════════════════════════════════
+// STORAGE HELPERS
+// ═══════════════════════════════════════════════════════
+function loadUsers(){try{return JSON.parse(localStorage.getItem(STORAGE.USERS))||{};}catch{return {};}}
+function saveUsers(u){localStorage.setItem(STORAGE.USERS,JSON.stringify(u));}
+function loadSession(){try{return JSON.parse(localStorage.getItem(STORAGE.SESSION));}catch{return null;}}
+function saveSession(u){localStorage.setItem(STORAGE.SESSION,JSON.stringify(u));}
+function clearSession(){localStorage.removeItem(STORAGE.SESSION);}
+function loadTomes(){try{return JSON.parse(localStorage.getItem(STORAGE.TOMES))||[];}catch{return [];}}
+function saveTomes(t){localStorage.setItem(STORAGE.TOMES,JSON.stringify(t));}
+function loadManga(){try{return JSON.parse(localStorage.getItem(STORAGE.MANGA))||[];}catch{return [];}}
+function saveManga(m){localStorage.setItem(STORAGE.MANGA,JSON.stringify(m));}
+function loadGuestFragments(){try{return JSON.parse(localStorage.getItem(STORAGE.GUEST))||[];}catch{return [];}}
+function saveGuestFragments(a){localStorage.setItem(STORAGE.GUEST,JSON.stringify(a));}
+
+function getCurrentFragments(){
+  if(currentUser){
+    const users=loadUsers();
+    return users[currentUser.username]?.fragments||[];
+  }
+  return loadGuestFragments();
+}
+function hasFragment(id){return getCurrentFragments().includes(id);}
+
+function addFragment(id){
+  if(currentUser){
+    const users=loadUsers();
+    if(!users[currentUser.username])return;
+    if(!users[currentUser.username].fragments.includes(id)){
+      users[currentUser.username].fragments.push(id);
+      users[currentUser.username].lastActivity=Date.now();
+      saveUsers(users);
+    }
+  } else {
+    const g=loadGuestFragments();
+    if(!g.includes(id)){g.push(id);saveGuestFragments(g);}
+  }
+}
+
+function initAdminIfNeeded(){
+  const users=loadUsers();
+  if(!users[ADMIN_USER]){
+    users[ADMIN_USER]={username:ADMIN_USER,email:'admin@afuenyama.com',password:ADMIN_PASS,role:'admin',fragments:[],createdAt:Date.now(),lastActivity:Date.now()};
+    saveUsers(users);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════
+function switchAuthMode(mode){
+  const lf=document.getElementById('login-form'),rf=document.getElementById('register-form');
+  const title=document.getElementById('auth-modal-title'),sub=document.getElementById('auth-modal-sub');
+  const err=document.getElementById('auth-error');err.style.display='none';
+  if(mode==='login'){lf.style.display='block';rf.style.display='none';title.textContent='Entrer dans le Nyama';sub.textContent='Connexion';}
+  else{lf.style.display='none';rf.style.display='block';title.textContent='Rejoindre l\'Univers';sub.textContent='Création de Compte';}
+}
+
+function handleLogin(){
+  const id=document.getElementById('login-id').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  const err=document.getElementById('auth-error');
+  if(!id||!pass){showAuthError('Veuillez remplir tous les champs.');return;}
+  const users=loadUsers();
+  let user=null;
+  for(const k in users){if((users[k].email===id||users[k].username===id)&&users[k].password===pass){user=users[k];break;}}
+  if(!user){showAuthError('Identifiants incorrects.');return;}
+  // Merge guest fragments
+  const guest=loadGuestFragments();
+  guest.forEach(id=>{if(!users[user.username].fragments.includes(id))users[user.username].fragments.push(id);});
+  users[user.username].lastLogin=Date.now();
+  saveUsers(users);
+  saveGuestFragments([]);
+  currentUser={username:user.username,role:user.role||'user'};
+  saveSession(currentUser);
+  closeModal('auth-modal');
+  updateNavForUser();
+  updateProfilePage();
+  // Check return fragment
+  checkMilestone();
+  showNotif('◈ Bienvenue, '+user.username+' !');
+}
+
+function showAuthError(msg){const e=document.getElementById('auth-error');e.textContent=msg;e.style.display='block';}
+
+function handleRegister(){
+  const email=document.getElementById('reg-email').value.trim();
+  const pseudo=document.getElementById('reg-pseudo').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  const pass2=document.getElementById('reg-pass2').value;
+  const err=document.getElementById('auth-error');
+  if(!email||!pseudo||!pass){showAuthError('Veuillez remplir tous les champs.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showAuthError('Email invalide.');return;}
+  if(pseudo.length<3||pseudo.length>24){showAuthError('Le pseudonyme doit faire entre 3 et 24 caractères.');return;}
+  if(pass.length<6){showAuthError('Le mot de passe doit faire au moins 6 caractères.');return;}
+  if(pass!==pass2){showAuthError('Les mots de passe ne correspondent pas.');return;}
+  const users=loadUsers();
+  for(const k in users){if(users[k].email===email){showAuthError('Cet email est déjà utilisé.');return;}if(users[k].username.toLowerCase()===pseudo.toLowerCase()){showAuthError('Ce pseudonyme est déjà pris.');return;}}
+  pendingRegisterData={email,pseudo,pass};
+  closeModal('auth-modal');
+  openModal('cgu-modal');
+}
+
+function acceptCGU(){
+  if(!document.getElementById('cgu-check').checked){alert('Vous devez accepter la Charte pour continuer.');return;}
+  if(!pendingRegisterData)return;
+  const{email,pseudo,pass}=pendingRegisterData;
+  const users=loadUsers();
+  users[pseudo]={username:pseudo,email,password:pass,role:'user',fragments:[],createdAt:Date.now(),lastLogin:Date.now(),lastActivity:Date.now()};
+  saveUsers(users);
+  const guest=loadGuestFragments();
+  guest.forEach(id=>{if(!users[pseudo].fragments.includes(id))users[pseudo].fragments.push(id);});
+  saveUsers(users);saveGuestFragments([]);
+  currentUser={username:pseudo,role:'user'};
+  saveSession(currentUser);
+  pendingRegisterData=null;
+  closeModal('cgu-modal');
+  updateNavForUser();
+  // Grant create account fragment
+  setTimeout(()=>discoverFragment(26),800);
+  updateProfilePage();
+  showNotif('◈ Bienvenue dans l\'univers, '+pseudo+' !');
+}
+
+function handleLogout(){
+  currentUser=null;clearSession();
+  updateNavForUser();
+  goPage('home');
+  showNotif('◈ À bientôt, voyageur.');
+}
+
+function updateNavForUser(){
+  const auth=document.getElementById('nav-auth');
+  const userEl=document.getElementById('nav-user');
+  const usernameEl=document.getElementById('nav-username');
+  const adminBtn=document.getElementById('nav-admin-btn');
+  if(currentUser){
+    auth.style.display='none';userEl.style.display='flex';
+    usernameEl.textContent=currentUser.username;
+    const found=getCurrentFragments().length;
+    usernameEl.innerHTML=currentUser.username+'<span class="nav-badge">'+found+'/40</span>';
+    adminBtn.style.display=currentUser.role==='admin'?'inline':'none';
+  } else {
+    auth.style.display='flex';userEl.style.display='none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// FRAGMENT SYSTEM
+// ═══════════════════════════════════════════════════════
+function discoverFragment(id){
+  if(hasFragment(id))return false;
+  addFragment(id);
+  const f=FRAGMENTS.find(x=>x.id===id);
+  if(!f)return false;
+  showFragmentModal(f);
+  updateNavForUser();
+  checkMilestone();
+  return true;
+}
+
+function showFragmentModal(f){
+  document.getElementById('fr-banner').className='fragment-rarity-banner '+f.rarity;
+  document.getElementById('fr-rarity-text').textContent=f.rarity.toUpperCase();
+  document.getElementById('fr-num').textContent=f.id;
+  document.getElementById('fr-symbol').textContent=f.symbol;
+  document.getElementById('fr-title').textContent=f.title;
+  document.getElementById('fr-sub').textContent=f.sub;
+  document.getElementById('fr-text').textContent=f.text;
+  document.getElementById('fr-xp').textContent=f.xp;
+  document.getElementById('fr-xp').className='fragment-xp '+f.rarity;
+  const total=getCurrentFragments().length;
+  document.getElementById('fr-progress').textContent='Progression : '+total+' / 40 fragments découverts';
+  openModal('fragment-modal');
+}
+
+function checkMilestone(){
+  const found=getCurrentFragments();
+  const milestones=[{count:5,id:27},{count:10,id:28},{count:20,id:29},{count:30,id:30},{count:38,id:31},{count:39,id:40}];
+  milestones.forEach(m=>{if(found.length>=m.count&&!hasFragment(m.id)){setTimeout(()=>discoverFragment(m.id),600);}});
+}
+
+// Triggers
+let konamiSeq=[];
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let logoClickCount=0,logoClickTimer=null;
+let footerHoverTimer=null;
+
+document.addEventListener('keydown',e=>{
+  konamiSeq.push(e.key);if(konamiSeq.length>10)konamiSeq.shift();
+  if(JSON.stringify(konamiSeq)===JSON.stringify(KONAMI)){konamiSeq=[];discoverFragment(1);showNotif('◈ Code Konami — Fragment #1');}
+});
+
+document.addEventListener('keypress',ev=>{
+  typed+=ev.key.toUpperCase();if(typed.length>12)typed=typed.slice(-12);
+  const words=[['ZOR',2],['NYAMA',3],['TREME',4],['KENHACHI',5],['EKWELE',6],['ELOMBA',7],['FAKELI',8],['SODIE',13],['DOMO',14],['YARADE',15],['LEO',16],['MASQUE',17],['NGWARKEN',18],['ORISHAS',19],['SHANGO',20],['FAUCHEURS',21],['ESHU',22],['OSHUN',25]];
+  words.forEach(([w,id])=>{if(typed.endsWith(w)){typed='';if(discoverFragment(id))showNotif('◈ "'+w+'" — Fragment #'+id);}});
+});
+
+function handleNyamaClick(){
+  nyamaClickCount++;
+  document.getElementById('nyama-count-num').textContent=nyamaClickCount<9?nyamaClickCount:'✦';
+  if(nyamaClickCount>=9&&!hasFragment(9)){discoverFragment(9);document.getElementById('nyama-core-svg').style.fill='#FF4A1C';}
+  else if(nyamaClickCount<9){showNotif('Nyama : '+nyamaClickCount+'/9');}
+}
+
+// Logo triple click
+document.getElementById('nav-logo-link').addEventListener('click',()=>{
+  logoClickCount++;clearTimeout(logoClickTimer);
+  logoClickTimer=setTimeout(()=>logoClickCount=0,800);
+  if(logoClickCount>=3){logoClickCount=0;if(discoverFragment(10))showNotif('◈ Triple clic — Fragment #10');}
+});
+
+// Footer hover
+const footerSecretEl=document.getElementById('footer-secret-text');
+if(footerSecretEl){
+  footerSecretEl.addEventListener('mouseenter',()=>{footerHoverTimer=setTimeout(()=>{if(discoverFragment(12))showNotif('◈ Footer secret — Fragment #12');},4000);});
+  footerSecretEl.addEventListener('mouseleave',()=>clearTimeout(footerHoverTimer));
+}
+
+// Léo card clicks
+let leodotClicks=0;
+document.addEventListener('DOMContentLoaded',()=>{
+  const leoCard=document.getElementById('char-leo');
+  if(leoCard)leoCard.addEventListener('click',()=>{leodotClicks++;if(leodotClicks>=7){leodotClicks=0;if(discoverFragment(23))showNotif('◈ 7 clics sur Léo — Fragment #23');}});
+  const cosmosDot=document.getElementById('cosmos-dot-el');
+  if(cosmosDot)cosmosDot.addEventListener('click',()=>{cosmosDotClicks++;if(cosmosDotClicks>=5){cosmosDotClicks=0;if(discoverFragment(24))showNotif('◈ 5 clics cosmos — Fragment #24');}});
+});
+
+// Console fragment
+console.log('%cAFUɛ NYAMA','font-size:2rem;font-weight:bold;color:#C8860A;font-family:Georgia');
+console.log('%c» Fragment #11 déverrouillé par les curieux de la console.','color:#F5D78E;font-style:italic');
+console.log('%c» Ouvre les DevTools = Fragment #11 disponible. Tape: unlockConsole()','color:#8B7355');
+window.unlockConsole=function(){if(discoverFragment(11))showNotif('◈ Console — Fragment #11');};
+
+// Tome code
+function submitTomeCode(){
+  const input=document.getElementById('tome-code-input');
+  const code=input.value.trim().toUpperCase();
+  const f=FRAGMENTS.find(x=>x.trigger.type==='tome'&&x.trigger.code===code);
+  if(!f){showNotif('◈ Code invalide. Cherche bien dans le Tome.');input.value='';return;}
+  if(hasFragment(f.id)){showNotif('◈ Fragment déjà découvert !');input.value='';return;}
+  if(discoverFragment(f.id))showNotif('◈ Code valide — Fragment #'+f.id+' découvert !');
+  input.value='';
+}
+
+// ═══════════════════════════════════════════════════════
+// PAGE ROUTING
+// ═══════════════════════════════════════════════════════
+function goPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='profile')updateProfilePage();
+  if(page==='admin')updateAdminPage();
+  if(page==='tomes')renderTomes();
+  if(page==='manga')renderManga();
+  ['home','tomes','manga','profile'].forEach(id=>{const el=document.getElementById('nl-'+id);if(el)el.classList.toggle('active',page===id);});
+}
+
+// ═══════════════════════════════════════════════════════
+// PROFILE PAGE
+// ═══════════════════════════════════════════════════════
+function updateProfilePage(){
+  const lo=document.getElementById('profile-logged-out');
+  const li=document.getElementById('profile-logged-in');
+  if(!currentUser){lo.style.display='block';li.style.display='none';return;}
+  lo.style.display='none';li.style.display='block';
+  const users=loadUsers();
+  const u=users[currentUser.username];
+  const found=u.fragments||[];
+  const pct=Math.round((found.length/40)*100);
+  const container=document.getElementById('profile-content');
+  const maskColor=found.length<10?'#5C2A00':found.length<25?'#C8860A':found.length<38?'#FF4A1C':'#F5D78E';
+  container.innerHTML=`
+  <div style="padding:100px 5vw 3rem">
+    <div class="profile-inner">
+      <div class="profile-header">
+        <div class="profile-mask-wrap">
+          <svg class="profile-mask-svg" viewBox="0 0 200 260" fill="none">
+            <path d="M100 8C60 8 30 40 25 80C20 120 30 160 40 190C50 220 70 250 100 252C130 250 150 220 160 190C170 160 180 120 175 80C170 40 140 8 100 8Z" fill="#1A0A02"/>
+            <ellipse cx="72" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="72" cy="97" r="5" fill="${maskColor}" opacity=".9"/>
+            <ellipse cx="128" cy="100" rx="18" ry="22" fill="#0D0702"/><circle cx="128" cy="97" r="5" fill="${maskColor}" opacity=".9"/>
+            <circle cx="100" cy="48" r="8" fill="none" stroke="${maskColor}" stroke-width="2"/><circle cx="100" cy="48" r="3" fill="${maskColor}"/>
+          </svg>
+        </div>
+        <div class="profile-info">
+          <div class="username">${u.username}</div>
+          <div class="email">${u.email}</div>
+          <div class="profile-stats">
+            <div class="stat-item"><div class="stat-num">${found.length}</div><div class="stat-label">Fragments</div></div>
+            <div class="stat-item"><div class="stat-num">${pct}%</div><div class="stat-label">Complétion</div></div>
+            <div class="stat-item"><div class="stat-num">${found.filter(id=>{const f=FRAGMENTS.find(x=>x.id===id);return f&&f.rarity==='mythique';}).length}</div><div class="stat-label">Mythiques</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-section">
+        <div class="progress-label"><span>Mystères Découverts</span><span>${found.length} / 40</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <div class="progress-text">${pct<25?'Tu commences à peine. Le Nyama te regarde.':pct<50?'Tu avances. Les fragments résistent encore.':pct<75?'Impressionnant. La vérité se dévoile.':pct<100?'Presque là. Zor\'unmah t\'attend.':'Tu as tout trouvé. Le Nyama se souvient de toi.'}</div>
+      </div>
+      <h3 style="font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem">Fragments Découverts</h3>
+      <div class="fragments-found-list">
+        ${FRAGMENTS.map(f=>found.includes(f.id)?`<div class="fragment-badge ${f.rarity}"><div class="f-rarity">${f.rarity.toUpperCase()}</div><div class="f-title">${f.symbol} ${f.title}</div></div>`:`<div class="fragment-badge-locked"><div class="f-title">◈ Fragment #${f.id} — ???</div></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+  renderLeaderboard();
+}
+
+function renderLeaderboard(){
+  const users=loadUsers();
+  const entries=Object.values(users).filter(u=>u.role!=='admin').map(u=>({name:u.username,count:(u.fragments||[]).length})).sort((a,b)=>b.count-a.count).slice(0,10);
+  const el=document.getElementById('leaderboard-list');
+  if(!el)return;
+  if(!entries.length){el.innerHTML='<p style="color:var(--ash);font-style:italic;padding:1rem">Aucun chasseur inscrit pour le moment.</p>';return;}
+  el.innerHTML=entries.map((e,i)=>`<div class="leaderboard-entry"><div class="lb-rank ${i===0?'gold-rank':''}">${i+1}</div><div class="lb-name">${e.name}</div><div class="lb-score">${e.count}/40</div><div class="lb-bar"><div class="lb-bar-fill" style="width:${(e.count/40)*100}%"></div></div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOMES
+// ═══════════════════════════════════════════════════════
+function renderTomes(){
+  const tomes=loadTomes();
+  const el=document.getElementById('tomes-list');
+  if(!tomes.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--ash)"><p style="font-family:\'Cinzel\',serif;font-size:1rem;margin-bottom:1rem">Aucun tome publié pour le moment.</p><p style="font-style:italic;font-size:.85rem">Le Tome 1 arrive bientôt.</p></div>';return;}
+  el.innerHTML=tomes.map(t=>`
+  <div class="tome-card">
+    <div class="tome-cover"><div class="tome-cover-num">${t.num}</div>
+      <svg class="tome-cover-icon" viewBox="0 0 200 260" fill="none"><path d="M100 8C60 8 30 40 25 80C20 120 30 160 40 190C50 220 70 250 100 252C130 250 150 220 160 190C170 160 180 120 175 80C170 40 140 8 100 8Z" fill="#C8860A" opacity=".15"/><ellipse cx="72" cy="100" rx="18" ry="22" fill="#C8860A" opacity=".2"/><circle cx="72" cy="97" r="5" fill="#C8860A" opacity=".5"/><ellipse cx="128" cy="100" rx="18" ry="22" fill="#C8860A" opacity=".2"/><circle cx="128" cy="97" r="5" fill="#C8860A" opacity=".5"/></svg>
+    </div>
+    <div class="tome-info">
+      <div class="tome-num-badge">Tome ${t.num}</div>
+      <div class="tome-title">${t.title}</div>
+      <div class="tome-desc">${t.desc||''}</div>
+      <div class="tome-actions">
+        ${t.fileData||t.url?`<button class="btn-tome fill" onclick="openTome(${t.id})">Lire</button>`:''}
+        ${t.url?`<a href="${t.url}" target="_blank" class="btn-tome">Télécharger</a>`:''}
+      </div>
+      <div class="tome-code-hint">💡 Des codes de fragments sont cachés dans ce tome. Les lecteurs attentifs les trouveront.</div>
+    </div>
+  </div>`).join('');
+}
+
+function openTome(id){
+  const tomes=loadTomes();const t=tomes.find(x=>x.id===id);if(!t)return;
+  document.getElementById('tv-title').textContent='Tome '+t.num+' — '+t.title;
+  const embed=document.getElementById('tv-embed');const fallback=document.getElementById('tv-fallback');
+  const dl=document.getElementById('tv-download');
+  if(t.fileData){embed.src=t.fileData;embed.style.display='block';fallback.style.display='none';}
+  else if(t.url){
+    // Try embed, fallback to download
+    embed.src=t.url;embed.style.display='block';fallback.style.display='none';
+    dl.href=t.url;dl.textContent='Ouvrir dans un nouvel onglet';
+  }
+  openModal('tome-viewer');
+}
+
+// ═══════════════════════════════════════════════════════
+// MANGA
+// ═══════════════════════════════════════════════════════
+function renderManga(){
+  const manga=loadManga();
+  const chapters=[...new Set(manga.map(p=>p.chapter))].sort((a,b)=>a-b);
+  const navEl=document.getElementById('manga-chapters-nav');
+  const gridEl=document.getElementById('manga-pages-grid');
+  if(!manga.length){navEl.innerHTML='';gridEl.innerHTML='<div class="manga-empty"><h3>Chapitres à venir</h3><p style="color:var(--ash);font-style:italic">Le manga est en cours de création. Revenez bientôt.</p></div>';return;}
+  navEl.innerHTML=chapters.map((c,i)=>`<button class="chapter-btn${i===0?' active':''}" onclick="showMangaChapter(${c},this)">Chap. ${c}</button>`).join('');
+  showMangaChapter(chapters[0]);
+}
+
+function showMangaChapter(chapterNum,btn){
+  document.querySelectorAll('.chapter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const manga=loadManga();
+  const pages=manga.filter(p=>p.chapter===chapterNum).sort((a,b)=>a.page-b.page);
+  const gridEl=document.getElementById('manga-pages-grid');
+  gridEl.innerHTML=pages.map((p,i)=>`<div class="manga-page-card" onclick="openMangaViewer(${chapterNum},${i})"><img src="${p.src}" alt="Page ${p.page}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='flex')"><div style="width:100%;aspect-ratio:3/4;background:var(--dark);display:none;align-items:center;justify-content:center;color:var(--ash)">Image indisponible</div><div class="manga-page-num">P.${p.page}</div></div>`).join('');
+}
+
+function openMangaViewer(chapterNum,index){
+  const manga=loadManga();
+  const pages=manga.filter(p=>p.chapter===chapterNum).sort((a,b)=>a.page-b.page);
+  mangaViewerData={pages,currentIndex:index};
+  updateMangaViewer();
+  openModal('manga-viewer');
+}
+function updateMangaViewer(){
+  const{pages,currentIndex}=mangaViewerData;
+  if(!pages.length)return;
+  const p=pages[currentIndex];
+  document.getElementById('mv-img').src=p.src;
+  document.getElementById('mv-title').textContent='Chapitre '+p.chapter+' — Page '+p.page;
+  document.getElementById('mv-counter').textContent=(currentIndex+1)+' / '+pages.length;
+}
+function mangaViewerPrev(){if(mangaViewerData.currentIndex>0){mangaViewerData.currentIndex--;updateMangaViewer();}}
+function mangaViewerNext(){if(mangaViewerData.currentIndex<mangaViewerData.pages.length-1){mangaViewerData.currentIndex++;updateMangaViewer();}}
+
+// ═══════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════
+function updateAdminPage(){
+  const denied=document.getElementById('admin-denied');
+  const wrap=document.getElementById('admin-panel-wrap');
+  if(!currentUser||currentUser.role!=='admin'){denied.style.display='block';wrap.style.display='none';return;}
+  denied.style.display='none';wrap.style.display='block';
+  renderAdminStats();renderAdminUsers();renderAdminTomes();renderAdminManga();renderAdminFragments();renderTomeCodes();
+}
+
+function switchAdminPanel(id){
+  document.querySelectorAll('.admin-panel-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ap-'+id).classList.add('active');
+  document.querySelectorAll('.admin-nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(b=>{if(b.textContent.includes(id==='stats'?'Tableau':id==='users'?'Util':id==='tomes'?'Tomes':id==='manga'?'Manga':id==='fragments'?'Fragment':'Codes'))b.classList.add('active');});
+}
+
+function renderAdminStats(){
+  const users=loadUsers();
+  const tomes=loadTomes();const manga=loadManga();
+  const userList=Object.values(users).filter(u=>u.role!=='admin');
+  const totalFinds=userList.reduce((s,u)=>s+(u.fragments||[]).length,0);
+  const mostFound=FRAGMENTS.map(f=>({f,count:userList.filter(u=>(u.fragments||[]).includes(f.id)).length})).sort((a,b)=>b.count-a.count)[0];
+  document.getElementById('admin-stat-grid').innerHTML=`
+    <div class="admin-stat"><div class="admin-stat-num">${userList.length}</div><div class="admin-stat-label">Membres</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${totalFinds}</div><div class="admin-stat-label">Fragments trouvés</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${tomes.length}</div><div class="admin-stat-label">Tomes publiés</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${manga.length}</div><div class="admin-stat-label">Pages Manga</div></div>`;
+  document.getElementById('admin-activity').innerHTML=userList.length?userList.sort((a,b)=>(b.lastActivity||0)-(a.lastActivity||0)).slice(0,5).map(u=>`<div style="padding:.6rem 0;border-bottom:1px solid rgba(200,134,10,.06);font-size:.85rem;display:flex;justify-content:space-between;align-items:center"><span style="color:var(--cream)">${u.username}</span><span style="color:var(--ash)">${(u.fragments||[]).length}/40 fragments</span></div>`).join(''):'<p style="color:var(--ash);font-style:italic">Aucun membre encore.</p>';
+}
+
+function renderAdminUsers(){
+  const users=loadUsers();
+  const userList=Object.values(users).filter(u=>u.role!=='admin');
+  document.getElementById('admin-users-table').innerHTML=userList.length?`<table class="admin-table"><thead><tr><th>Pseudo</th><th>Email</th><th>Fragments</th><th>Inscrit le</th><th>Action</th></tr></thead><tbody>${userList.map(u=>`<tr><td style="color:var(--cream)">${u.username}</td><td>${u.email}</td><td><b style="color:var(--gold)">${(u.fragments||[]).length}/40</b><div class="lb-bar" style="width:80px;margin-top:4px"><div class="lb-bar-fill" style="width:${((u.fragments||[]).length/40)*100}%"></div></div></td><td>${new Date(u.createdAt).toLocaleDateString('fr-FR')}</td><td><button class="admin-btn danger" style="font-size:.5rem;padding:.3rem .7rem" onclick="adminDeleteUser('${u.username}')">Supprimer</button></td></tr>`).join('')}</tbody></table>`:'<p style="color:var(--ash);font-style:italic">Aucun membre inscrit.</p>';
+}
+
+function adminDeleteUser(username){
+  if(!confirm('Supprimer '+username+' ?'))return;
+  const users=loadUsers();delete users[username];saveUsers(users);renderAdminUsers();renderAdminStats();showNotif('✓ Utilisateur supprimé.');
+}
+
+function adminAddTome(){
+  const num=parseInt(document.getElementById('at-num').value);
+  const title=document.getElementById('at-title').value.trim();
+  const desc=document.getElementById('at-desc').value.trim();
+  const file=document.getElementById('at-file').files[0];
+  const url=document.getElementById('at-url').value.trim();
+  const msgEl=document.getElementById('tome-admin-msg');
+  if(!num||!title){msgEl.innerHTML='<div class="admin-msg error">Numéro et titre requis.</div>';return;}
+  const tomes=loadTomes();
+  const id=Date.now();
+  if(file){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      tomes.push({id,num,title,desc,fileData:e.target.result,uploadedAt:Date.now()});
+      try{saveTomes(tomes);msgEl.innerHTML='<div class="admin-msg success">✓ Tome '+num+' publié avec succès !</div>';renderAdminTomes();}
+      catch(err){msgEl.innerHTML='<div class="admin-msg error">Fichier trop volumineux pour localStorage. Utilisez une URL externe.</div>';}
+    };reader.readAsDataURL(file);
+  } else {
+    tomes.push({id,num,title,desc,url,uploadedAt:Date.now()});
+    saveTomes(tomes);msgEl.innerHTML='<div class="admin-msg success">✓ Tome '+num+' publié (URL externe).</div>';renderAdminTomes();
+  }
+}
+
+function renderAdminTomes(){
+  const tomes=loadTomes();
+  document.getElementById('admin-tomes-list').innerHTML=tomes.length?tomes.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;border-bottom:1px solid rgba(200,134,10,.08)"><span style="color:var(--cream)">Tome ${t.num} — ${t.title}</span><button class="admin-btn danger" style="font-size:.5rem;padding:.3rem .7rem" onclick="adminDeleteTome(${t.id})">Supprimer</button></div>`).join(''):'<p style="color:var(--ash);font-style:italic">Aucun tome publié.</p>';
+}
+function adminDeleteTome(id){const tomes=loadTomes().filter(t=>t.id!==id);saveTomes(tomes);renderAdminTomes();showNotif('✓ Tome supprimé.');}
+
+function adminAddMangaPage(){
+  const chapter=parseInt(document.getElementById('am-chapter').value);
+  const title=document.getElementById('am-title').value.trim();
+  const page=parseInt(document.getElementById('am-page').value);
+  const file=document.getElementById('am-file').files[0];
+  const url=document.getElementById('am-url').value.trim();
+  const msgEl=document.getElementById('manga-admin-msg');
+  if(!chapter||!page){msgEl.innerHTML='<div class="admin-msg error">Numéro de chapitre et de page requis.</div>';return;}
+  const manga=loadManga();
+  if(file){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      manga.push({id:Date.now(),chapter,chapterTitle:title,page,src:e.target.result});
+      try{saveManga(manga);msgEl.innerHTML='<div class="admin-msg success">✓ Page '+page+' du Chapitre '+chapter+' ajoutée !</div>';renderAdminManga();}
+      catch(err){msgEl.innerHTML='<div class="admin-msg error">Image trop volumineuse. Utilisez une URL externe.</div>';}
+    };reader.readAsDataURL(file);
+  } else if(url){
+    manga.push({id:Date.now(),chapter,chapterTitle:title,page,src:url});
+    saveManga(manga);msgEl.innerHTML='<div class="admin-msg success">✓ Page ajoutée (URL externe).</div>';renderAdminManga();
+  } else {msgEl.innerHTML='<div class="admin-msg error">Fournissez un fichier ou une URL.</div>';}
+}
+
+function renderAdminManga(){
+  const manga=loadManga();
+  document.getElementById('admin-manga-list').innerHTML=manga.length?manga.sort((a,b)=>a.chapter-b.chapter||a.page-b.page).map(p=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem;border-bottom:1px solid rgba(200,134,10,.06)"><span style="color:var(--cream)">Chap.${p.chapter} P.${p.page}</span><button class="admin-btn danger" style="font-size:.5rem;padding:.3rem .7rem" onclick="adminDeleteMangaPage(${p.id})">×</button></div>`).join(''):'<p style="color:var(--ash);font-style:italic">Aucune page publiée.</p>';
+}
+function adminDeleteMangaPage(id){const m=loadManga().filter(p=>p.id!==id);saveManga(m);renderAdminManga();}
+
+function renderAdminFragments(){
+  const users=loadUsers();
+  const userList=Object.values(users).filter(u=>u.role!=='admin');
+  document.getElementById('admin-fragments-grid').innerHTML=FRAGMENTS.map(f=>{
+    const count=userList.filter(u=>(u.fragments||[]).includes(f.id)).length;
+    return`<div class="fragment-admin-card"><div class="f-id">Fragment #${f.id} <span class="badge-rarity ${f.rarity}">${f.rarity}</span></div><div class="f-name">${f.title}</div><div class="f-found">${count} découverte(s)</div></div>`;
+  }).join('');
+}
+
+function renderTomeCodes(){
+  document.getElementById('tome-codes-list').innerHTML=TOME_CODES.map((code,i)=>`<div class="tome-code-reveal"><div style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--ash);margin-bottom:.5rem">Fragment #${33+i} — ${FRAGMENTS[32+i].title}</div><code>${code}</code></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HELPERS
+// ═══════════════════════════════════════════════════════
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-bg.open').forEach(m=>m.classList.remove('open'));});
+function closeSecret(){document.getElementById('secret-overlay').classList.remove('active');secretOpen=false;}
+
+// ═══════════════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════════════
+let notifTimer=null;
+function showNotif(msg){
+  const n=document.getElementById('fragment-notif');
+  n.textContent=msg;n.classList.add('show');
+  clearTimeout(notifTimer);notifTimer=setTimeout(()=>n.classList.remove('show'),3500);
+}
+
+// ═══════════════════════════════════════════════════════
+// CGU TEXT
+// ═══════════════════════════════════════════════════════
+function setCGU(){
+  document.getElementById('cgu-text').innerHTML=`
+<h4>PRÉAMBULE</h4>
+<p>La présente Charte d'Utilisation (ci-après « la Charte ») régit l'accès et l'utilisation du site internet AFUɛ NYAMA (ci-après « le Site »), ainsi que l'ensemble des contenus, fonctionnalités et expériences interactives qui y sont proposés. En procédant à la création d'un compte, l'Utilisateur reconnaît avoir lu, compris et accepté l'intégralité des dispositions qui suivent, sans réserve ni exception.</p>
+<h4>ARTICLE PREMIER — OBJET ET DÉFINITIONS</h4>
+<p>Le Site AFUɛ NYAMA est une plateforme de présentation et de diffusion d'une œuvre originale de dark fantasy africaine, comprenant notamment des romans, adaptations manga, documents de lore, et une expérience ludique de découverte de fragments narratifs. Les termes « Utilisateur », « Membre » ou « Chasseur » désignent toute personne physique ayant créé un compte sur le Site. Le terme « Administrateur » désigne le créateur de l'œuvre, seul détenteur des droits d'accès au panneau d'administration.</p>
+<h4>ARTICLE 2 — CRÉATION ET GESTION DU COMPTE</h4>
+<p>2.1 — L'Utilisateur s'engage à fournir des informations exactes, sincères et à jour lors de la création de son compte. Toute usurpation d'identité ou fourniture d'informations mensongères entraînera la suppression immédiate du compte. 2.2 — Le pseudonyme choisi doit respecter les bonnes mœurs et ne saurait contenir de propos offensants, discriminatoires, ou portant atteinte aux droits de tiers. L'Administrateur se réserve le droit de supprimer tout compte dont le pseudonyme contreviendrait à ces dispositions. 2.3 — L'Utilisateur est seul responsable de la confidentialité de ses identifiants de connexion.</p>
+<h4>ARTICLE 3 — RÈGLES DE CONDUITE</h4>
+<p>3.1 — Il est formellement interdit : de tenter de contourner les mécanismes de sécurité du Site ; de partager publiquement les solutions des énigmes et fragments cachés d'une manière qui nuirait à l'expérience des autres Utilisateurs ; d'utiliser des outils automatisés pour découvrir les fragments ; de reproduire, copier ou redistribuer les contenus de l'œuvre sans autorisation écrite préalable de l'Administrateur. 3.2 — L'Utilisateur s'engage à adopter un comportement respectueux envers l'œuvre, son créateur et l'ensemble de la communauté.</p>
+<h4>ARTICLE 4 — PROPRIÉTÉ INTELLECTUELLE</h4>
+<p>L'intégralité des contenus du Site — textes, personnages, systèmes de magie, noms propres, illustrations, titres de chapitres, et toute création originale liée à l'univers AFUɛ NYAMA — est la propriété exclusive de leur créateur. Toute reproduction, adaptation, diffusion ou utilisation commerciale sans autorisation écrite constitue une violation des droits de propriété intellectuelle et expose son auteur aux poursuites légales prévues par le droit applicable.</p>
+<h4>ARTICLE 5 — DONNÉES PERSONNELLES</h4>
+<p>Les informations collectées (email, pseudonyme) sont stockées localement sur l'appareil de l'Utilisateur et ne sont transmises à aucun serveur tiers. L'Utilisateur dispose d'un droit d'accès, de rectification et de suppression de ses données en contactant l'Administrateur via le formulaire de contact du Site.</p>
+<h4>ARTICLE 6 — EXPÉRIENCE LUDIQUE — LES 40 FRAGMENTS</h4>
+<p>6.1 — Le Site propose une expérience de jeu consistant à découvrir quarante (40) fragments de lore dissimulés dans l'interface et dans les œuvres publiées. Cette expérience est proposée à titre récréatif et n'engage aucune obligation de la part de l'Administrateur. 6.2 — Les indices, méthodes de découverte et codes dissimulés dans les œuvres font partie intégrante de l'expérience narrative. Leur partage massif et non sollicité est déconseillé afin de préserver l'expérience des autres lecteurs. 6.3 — La progression dans la découverte des fragments ne confère aucun avantage commercial, financier ou matériel à l'Utilisateur.</p>
+<h4>ARTICLE 7 — MODIFICATIONS ET ÉVOLUTION DU SITE</h4>
+<p>L'Administrateur se réserve le droit de modifier à tout moment les contenus, fonctionnalités, règles du jeu, et conditions de la présente Charte. Les modifications substantielles seront signalées aux Membres. L'utilisation continue du Site après modification vaut acceptation des nouvelles conditions.</p>
+<h4>ARTICLE 8 — LIMITATION DE RESPONSABILITÉ</h4>
+<p>Le Site est fourni « en l'état ». L'Administrateur ne saurait être tenu responsable de pertes de données liées aux limitations inhérentes au stockage local (localStorage), ni de l'inaccessibilité temporaire du Site, ni d'aucun dommage indirect découlant de l'utilisation du Site.</p>
+<h4>ARTICLE 9 — RÉCOMPENSES ET PROMESSES</h4>
+<p>Toute récompense, distinction, reconnaissance ou avantage mentionné ou suggéré dans le cadre de l'expérience des fragments, du classement des chasseurs ou de tout autre élément ludique du Site ne constitue en aucun cas un engagement contractuel de la part de l'Administrateur. Il est expressément précisé que <strong>toute récompense promise dans le cadre du jeu des fragments ne sera pas nécessairement remise</strong>. Il ne s'agit que d'un jeu narratif et expérientiel, sans valeur marchande ni obligation de résultat de la part de l'Administrateur. La participation à cette expérience est réalisée à titre gratuit, libre et éclairé, sans attente de contrepartie.</p>
+<h4>ARTICLE 10 — DROIT APPLICABLE</h4>
+<p>La présente Charte est soumise au droit du pays de résidence du créateur de l'œuvre. Tout litige découlant de son interprétation ou de son application sera soumis à la juridiction compétente correspondante.</p>
+<p style="margin-top:1.5rem;color:var(--gold);font-style:italic;font-size:.85rem">En acceptant cette Charte, vous entrez dans l'univers AFUɛ NYAMA. Le Nyama se souvient de votre engagement.</p>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// PARTICLES & CURSOR
+// ═══════════════════════════════════════════════════════
+const cursor=document.getElementById('cursor'),trail=document.getElementById('cursor-trail');
+let mouseX=0,mouseY=0,trailX=0,trailY=0;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursor.style.left=mouseX+'px';cursor.style.top=mouseY+'px';});
+(function animateTrail(){trailX+=(mouseX-trailX)*.12;trailY+=(mouseY-trailY)*.12;trail.style.left=trailX+'px';trail.style.top=trailY+'px';requestAnimationFrame(animateTrail);})();
+document.querySelectorAll('a,button,[onclick]').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));});
+
+const canvas=document.getElementById('nyama-canvas'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+class Particle{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H+H;this.vx=(Math.random()-.5)*.4;this.vy=-(Math.random()*.6+.2);this.size=Math.random()*2.5+.5;this.alpha=Math.random()*.4+.1;this.color=Math.random()>.7?`rgba(255,${Math.floor(Math.random()*60+60)},28,`:`rgba(200,${Math.floor(Math.random()*40+100)},10,`;this.life=0;this.maxLife=Math.random()*300+200;}update(){this.x+=this.vx+Math.sin(this.life*.02)*.3;this.y+=this.vy;this.life++;if(this.y<-20||this.life>this.maxLife)this.reset();}draw(){const a=this.alpha*(1-this.life/this.maxLife);ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=this.color+a+')';ctx.fill();}}
+const particles=[];for(let i=0;i<120;i++){const p=new Particle();p.y=Math.random()*H;p.life=Math.random()*p.maxLife;particles.push(p);}
+(function animateP(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});requestAnimationFrame(animateP);})();
+
+// Scroll reveal
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>revealObs.observe(r));
+
+// Parallax
+window.addEventListener('scroll',()=>{const y=window.scrollY;const hm=document.querySelector('.hero-mask');if(hm)hm.style.transform=`translateY(${y*.3}px)`;});
+
+// ═══════════════════════════════════════════════════════
+// SURPRISES SUPPLÉMENTAIRES
+// ═══════════════════════════════════════════════════════
+// Easter egg: Konami sur page admin → message spécial
+// Easter egg: rester sur la page sans bouger 2min → notification Nyama
+let idleTimer=null;
+function resetIdle(){clearTimeout(idleTimer);idleTimer=setTimeout(()=>{if(!hasFragment(3))return;showNotif('◈ Le Nyama perçoit ton immobilité...');},120000);}
+document.addEventListener('mousemove',resetIdle);document.addEventListener('keypress',resetIdle);
+
+// Effet de pulsation sur le compteur de fragments toutes les 8s
+setInterval(()=>{if(currentUser){const found=getCurrentFragments().length;if(found>0&&found<40){const n=document.getElementById('nyama-counter');n.style.boxShadow='0 0 20px rgba(200,134,10,.4)';setTimeout(()=>n.style.boxShadow='',400);}}},8000);
+
+// Surprise: à minuit (heure locale), un message spécial
+setInterval(()=>{const h=new Date().getHours(),m=new Date().getMinutes();if(h===0&&m===0&&currentUser){showNotif('⛧ Minuit. Zor\'unmah est plus proche que jamais.');}},60000);
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+(function init(){
+  initAdminIfNeeded();
+  setCGU();
+  const sess=loadSession();
+  if(sess){
+    currentUser=sess;
+    updateNavForUser();
+    // Check return milestone
+    if(currentUser){
+      const users=loadUsers();
+      if(users[currentUser.username]){
+        const visits=users[currentUser.username].visits||0;
+        users[currentUser.username].visits=visits+1;
+        users[currentUser.username].lastActivity=Date.now();
+        saveUsers(users);
+        if(visits>=2&&!hasFragment(32)){setTimeout(()=>discoverFragment(32),2000);}
+      }
+    }
+  }
+  // URL hash routing
+  const hash=window.location.hash.slice(1);
+  if(hash==='admin'&&currentUser?.role==='admin')goPage('admin');
+})();
+</script>
+</body>
+</html>
